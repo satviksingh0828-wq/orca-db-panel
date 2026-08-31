@@ -145,45 +145,58 @@ body {
 <script type="application/javascript">
 (function () {
   var ORCA_BRAND = 'ORCA DB';
+  var BRAND_PATTERN = /pgAdmin(?: 4)?/g;
+  var pending = false;
   var replaceBranding = function (value) {
-    if (!value || value.indexOf('pgAdmin') === -1) {
-      return value;
-    }
-    return value.replace(/pgAdmin(?: 4)?/g, ORCA_BRAND);
+    return value && value.indexOf('pgAdmin') !== -1 ? value.replace(BRAND_PATTERN, ORCA_BRAND) : value;
   };
-  var rewriteNode = function (node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.nodeValue = replaceBranding(node.nodeValue);
+  var rewriteVisibleBranding = function () {
+    pending = false;
+    if (!document.body) {
       return;
     }
-    if (node.nodeType !== Node.ELEMENT_NODE || node.tagName === 'SCRIPT' || node.tagName === 'STYLE') {
-      return;
-    }
-    ['title', 'aria-label', 'alt', 'placeholder'].forEach(function (attributeName) {
-      if (node.hasAttribute(attributeName)) {
-        node.setAttribute(attributeName, replaceBranding(node.getAttribute(attributeName)));
+    document.title = replaceBranding(document.title);
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var parent = node.parentElement;
+        if (!parent || parent.closest('script, style, template')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return node.nodeValue.indexOf('pgAdmin') === -1 ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
       }
     });
-    node.childNodes.forEach(rewriteNode);
+    var node = walker.nextNode();
+    while (node) {
+      node.nodeValue = replaceBranding(node.nodeValue);
+      node = walker.nextNode();
+    }
+    document.querySelectorAll('[title*="pgAdmin"], [aria-label*="pgAdmin"], [alt*="pgAdmin"], [placeholder*="pgAdmin"]').forEach(function (element) {
+      ['title', 'aria-label', 'alt', 'placeholder'].forEach(function (attributeName) {
+        if (element.hasAttribute(attributeName)) {
+          element.setAttribute(attributeName, replaceBranding(element.getAttribute(attributeName)));
+        }
+      });
+    });
   };
-  var runRewrite = function () {
-    rewriteNode(document.body);
-    document.title = replaceBranding(document.title);
+  var scheduleRewrite = function () {
+    if (pending) {
+      return;
+    }
+    pending = true;
+    window.setTimeout(rewriteVisibleBranding, 250);
   };
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', runRewrite);
+    document.addEventListener('DOMContentLoaded', scheduleRewrite);
   } else {
-    runRewrite();
+    scheduleRewrite();
   }
-  new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      mutation.addedNodes.forEach(rewriteNode);
-      if (mutation.type === 'characterData') {
-        rewriteNode(mutation.target);
-      }
+  if ('MutationObserver' in window) {
+    new MutationObserver(scheduleRewrite).observe(document.documentElement, {
+      childList: true,
+      characterData: true,
+      subtree: true
     });
-    document.title = replaceBranding(document.title);
-  }).observe(document.documentElement, {childList: true, characterData: true, subtree: true});
+  }
 }());
 </script>
 
