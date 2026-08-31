@@ -1,25 +1,32 @@
 ########################################################################
 # ORCA DB PANEL - Render build
-# Render-specific image; original Dockerfile remains unchanged for Railway.
+# Render-specific image. Original Dockerfile remains unchanged for Railway.
 ########################################################################
 
 FROM alpine:latest AS app-builder
 RUN apk add --no-cache autoconf automake bash g++ git libc6-compat libjpeg-turbo-dev libpng-dev libtool make nasm nodejs npm yarn zlib-dev
 COPY web /pgadmin4/web
 WORKDIR /pgadmin4/web
-RUN export CPPFLAGS="-DPNG_ARM_NEON_OPT=0" && npm install -g corepack && corepack enable && yarn install && yarn run bundle:dev && printf 'render-build unknown\n' > commit_hash && rm -rf yarn.lock package.json .[^.]* babel.cfg webpack.* jest.config.js babel.*
+RUN export CPPFLAGS="-DPNG_ARM_NEON_OPT=0" && \
+    npm install -g corepack && corepack enable && yarn install && yarn run bundle:dev && \
+    printf 'render-build unknown\n' > commit_hash && \
+    rm -rf yarn.lock package.json .[^.]* babel.cfg webpack.* jest.config.js babel.*
 
 FROM python:3-alpine AS env-builder
-RUN apk add --no-cache make && apk add --no-cache --virtual build-deps build-base openssl-dev libffi-dev postgresql-dev krb5-dev rust cargo zlib-dev libjpeg-turbo-dev
+RUN apk add --no-cache make && \
+    apk add --no-cache --virtual build-deps build-base openssl-dev libffi-dev postgresql-dev krb5-dev rust cargo zlib-dev libjpeg-turbo-dev libpng-dev
 COPY requirements.txt /
-RUN python3 -m venv --system-site-packages --without-pip /venv && /venv/bin/python3 -m pip install --no-cache-dir -r requirements.txt && apk del --no-cache build-deps
+RUN python3 -m venv --system-site-packages --without-pip /venv && \
+    /venv/bin/python3 -m pip install --no-cache-dir -r requirements.txt && \
+    apk del --no-cache build-deps
 
 FROM env-builder AS docs-builder
-RUN /venv/bin/python3 -m pip install --no-cache-dir sphinx sphinxcontrib-youtube
+RUN /venv/bin/python3 -m pip install --no-cache-dir sphinx && \
+    /venv/bin/python3 -m pip install --no-cache-dir sphinxcontrib-youtube
 COPY docs /pgadmin4/docs
 COPY web /pgadmin4/web
 RUN rm -rf /pgadmin4/docs/en_US/_build
-RUN /venv/bin/sphinx-build /pgadmin4/docs/en_US /pgadmin4/docs/en_US/_build/html
+RUN LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 /venv/bin/sphinx-build /pgadmin4/docs/en_US /pgadmin4/docs/en_US/_build/html
 RUN rm -rf /pgadmin4/docs/en_US/_build/html/.doctrees /pgadmin4/docs/en_US/_build/html/_sources /pgadmin4/docs/en_US/_build/html/_static/*.png
 
 FROM postgres:13-alpine AS pg13-builder
@@ -60,22 +67,32 @@ RUN apk add --no-cache bash postfix krb5-libs libcurl libjpeg-turbo shadow sudo 
 COPY --from=env-builder /venv /venv
 COPY --from=tool-builder /usr/local/pgsql /usr/local/
 COPY --from=pg18-builder /usr/local/lib/libpq.so.5.18 /usr/local/lib/libpq-oauth-18.so /usr/lib/liblz4.so.1.10.0 /usr/lib/
-RUN ln -s libpq.so.5.18 /usr/lib/libpq.so.5 && ln -s libpq.so.5.18 /usr/lib/libpq.so && ln -s liblz4.so.1.10.0 /usr/lib/liblz4.so.1
+RUN ln -s libpq.so.5.18 /usr/lib/libpq.so.5 && \
+    ln -s libpq.so.5.18 /usr/lib/libpq.so && \
+    ln -s liblz4.so.1.10.0 /usr/lib/liblz4.so.1
+
 WORKDIR /pgadmin4
 ENV PYTHONPATH=/pgadmin4
 ENV PGADMIN_DISABLE_POSTFIX=true
+
 COPY --from=app-builder /pgadmin4/web /pgadmin4
 COPY --from=docs-builder /pgadmin4/docs/en_US/_build/html/ /pgadmin4/docs
 COPY pkg/docker/run_pgadmin.py pkg/docker/gunicorn_config.py /pgadmin4/
 COPY pkg/docker/entrypoint.sh /entrypoint.sh
 COPY LICENSE /pgadmin4/LICENSE
 
-# Keep each operation independent so a harmless cleanup failure cannot stop the build.
-RUN /venv/bin/python3 -m pip install --no-cache-dir gunicorn==23.0.0
-RUN find /venv /pgadmin4 -type d -name '__pycache__' -prune -exec rm -rf {} + || true
-RUN adduser -D -H -u 5050 -G root -s /sbin/nologin pgadmin
-RUN mkdir -p /run/pgadmin /var/lib/pgadmin && chown pgadmin:root /run/pgadmin /var/lib/pgadmin && chmod g=u /run/pgadmin /var/lib/pgadmin
-RUN touch /pgadmin4/config_distro.py && chown pgadmin:root /pgadmin4/config_distro.py && chmod g=u /pgadmin4/config_distro.py && chmod g=u /etc/passwd
+# Render cannot use the privileged-port capability/sudoers setup from the
+# Railway image. Keep the rest of the original runtime setup intact.
+RUN /venv/bin/python3 -m pip install --no-cache-dir gunicorn==23.0.0 && \
+    find / -type d -name '__pycache__' -exec rm -rf {} + || true && \
+    addgroup -g 5050 pgadmin && \
+    adduser -D -H -u 5050 -G pgadmin -s /sbin/nologin pgadmin && \
+    mkdir -p /run/pgadmin /var/lib/pgadmin && \
+    chown pgadmin:pgadmin /run/pgadmin /var/lib/pgadmin && \
+    chmod g=u /run/pgadmin /var/lib/pgadmin && \
+    touch /pgadmin4/config_distro.py && \
+    chown pgadmin:pgadmin /pgadmin4/config_distro.py && \
+    chmod g=u /pgadmin4/config_distro.py
 
 USER 5050
 EXPOSE 10000
