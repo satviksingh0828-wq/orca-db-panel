@@ -1,0 +1,103 @@
+/* ORCA DB PANEL monochrome brand layer. */
+:root {
+  --orca-black: #000000;
+  --orca-white: #ffffff;
+  --orca-ink: #111111;
+  --orca-muted: #666666;
+  --orca-line: #d7d7d7;
+}
+
+html, body {
+  background: var(--orca-white);
+  color: var(--orca-ink);
+}
+
+a, a:hover, a:focus {
+  color: var(--orca-black);
+}
+
+button, .btn, input, select, textarea, .form-control {
+  border-color: var(--orca-line);
+  color: var(--orca-ink);
+}
+
+.btn-primary, .btn-info, .btn-success, .btn-warning, .btn-danger,
+.bg-primary, .bg-info, .bg-success, .bg-warning, .bg-danger {
+  background-color: var(--orca-black) !important;
+  border-color: var(--orca-black) !important;
+  color: var(--orca-white) !important;
+}
+
+.btn-primary:hover, .btn-info:hover, .btn-success:hover, .btn-warning:hover,
+.btn-danger:hover, .btn-primary:focus, .btn-info:focus, .btn-success:focus,
+.btn-warning:focus, .btn-danger:focus {
+  background-color: var(--orca-ink) !important;
+  border-color: var(--orca-ink) !important;
+}
+
+.navbar, .topbar, .panel-header, .modal-header {
+  background: var(--orca-black) !important;
+  color: var(--orca-white) !important;
+}
+
+.navbar a, .topbar a, .panel-header a, .modal-header button {
+  color: var(--orca-white) !important;
+}
+
+.pg-sp-container {
+  background: rgba(0, 0, 0, 0.82) !important;
+}
+
+.pg-sp-text {
+  color: var(--orca-white) !important;
+}
+
+::selection {
+  background: var(--orca-black);
+  color: var(--orca-white);
+}
+
+/* Replace the legacy colored application icon with the ORCA mark. */
+.app-icon {
+  background: url('../img/orca-logo.png') center / contain no-repeat !important;
+  color: transparent !important;
+  width: 1.5em;
+  height: 1.5em;
+  display: inline-block;
+}
+
+.pg-sp-icon {
+  background-image: url('../img/orca-logo.png') !important;
+  background-size: 75px 75px !important;
+}
+
+.orca-welcome-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #000000;
+}
+
+.orca-welcome-logo img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.orca-welcome-wordmark {
+  color: #000000;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+@media (max-width: 640px) {
+  .orca-welcome-logo {
+    flex-direction: column;
+  }
+  .orca-welcome-wordmark {
+    font-size: 1.35rem;
+  }
+}

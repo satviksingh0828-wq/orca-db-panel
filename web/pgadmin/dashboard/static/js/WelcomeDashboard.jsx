@@ -161,7 +161,7 @@ export default function WelcomeDashboard({ pgBrowser }) {
                 </h4>
                 <p>
                   {gettext(
-                    'pgAdmin is an Open Source administration and management tool for the PostgreSQL database. It includes a graphical administration interface, an SQL query tool, a procedural code debugger and much more. The tool is designed to answer the needs of developers, DBAs and system administrators alike.'
+                    'ORCA DB PANEL is an Open Source administration and management tool for the PostgreSQL database. It includes a graphical administration interface, an SQL query tool, a procedural code debugger and much more. The tool is designed to answer the needs of developers, DBAs and system administrators alike.'
                   )}
                 </p>
               </div>
@@ -194,7 +194,7 @@ export default function WelcomeDashboard({ pgBrowser }) {
                           aria-hidden="true"
                         ></span>
                       </div>
-                      {gettext('Configure pgAdmin')}
+                      {gettext('Configure ORCA DB PANEL')}
                     </Link>
                   </div>
                 </div>
@@ -224,14 +224,14 @@ export default function WelcomeDashboard({ pgBrowser }) {
                     </a>
                   </div>
                   <div className='WelcomeDashboard-gettingStartedLink'>
-                    <a href="https://www.pgadmin.org" target="pgadmin_website" className='WelcomeDashboard-link'>
+                    <a href="https://www.pgadmin.org" target="orca_db_panel_website" className='WelcomeDashboard-link'>
                       <div className='WelcomeDashboard-dashboardIcon'>
                         <span
                           className="fa fa-4x fa-globe"
                           aria-hidden="true"
                         ></span>
                       </div>
-                      {gettext('pgAdmin Website')}
+                      {gettext('ORCA DB PANEL Website')}
                     </a>
                   </div>
                   <div className='WelcomeDashboard-gettingStartedLink'>
