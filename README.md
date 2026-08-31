@@ -290,3 +290,9 @@ pgadmin-hackers@postgresql.org
 ## Railway deployment
 
 This Dockerfile is compatible with Railway’s builder and does not declare a Docker-managed `VOLUME`. In the Railway service settings, create or attach a Railway Volume and mount it at `/var/lib/pgadmin`. This path stores the ORCA DB PANEL configuration database and user data. Configure the service to expose the container’s HTTP port and keep the existing application environment variables used by the upstream container deployment.
+
+## Environment variables
+
+Use `.env.example` as the safe template for local testing or Railway setup. On Railway, copy the variables into the service’s Variables panel rather than uploading a real `.env` file. `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD` are required on the first startup. Use a unique long password and store it as a Railway secret.
+
+The startup script honors `PGADMIN_LISTEN_PORT` when explicitly set; otherwise it uses Railway’s injected `PORT` value, and falls back to port `80` for local Docker runs. Do not commit real passwords, API keys, TLS private keys, or production configuration files.
