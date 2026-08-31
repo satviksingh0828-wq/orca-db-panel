@@ -12,14 +12,12 @@
  * custom themes info will come here.
  */
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import CustomPropTypes from '../custom_prop_types';
 import getLightTheme from './light';
-import getDarkTheme from './dark';
-import getHightContrastTheme from './high_contrast';
 import { CssBaseline } from '@mui/material';
 import pickrOverride from './overrides/pickr.override';
 import uplotOverride from './overrides/uplot.override';
@@ -28,7 +26,6 @@ import cmOverride from './overrides/codemirror.override';
 import jsonEditorOverride from './overrides/jsoneditor.override';
 import pgadminOverride from './overrides/pgadmin.classes.override';
 import reactAspenOverride from './overrides/reactaspen.override';
-import usePreferences from '../../../preferences/static/js/store';
 import szhMenuOverride from './overrides/szhmenu.override';
 
 /* Common settings across all themes */
@@ -896,62 +893,11 @@ function getFinalTheme(baseTheme) {
   }, baseTheme);
 }
 
-/* Get the actual system theme is user selected system theme in preferences */
-function parseSystemTheme(selectedTheme) {
-  if (selectedTheme === 'system') {
-    const systemMatchMedia = matchMedia('(prefers-color-scheme: dark)');
-    return {
-      'theme': systemMatchMedia.matches ? 'dark' : 'light',
-      'systemMatchMedia': systemMatchMedia,
-    };
-  }
-  return {
-    'theme': selectedTheme,
-    'systemMatchMedia': null,
-  };
-}
 
-/* Theme wrapper used by DOM containers to apply theme */
-/* In future, this will be moved to App container */
+/* Theme wrapper used by DOM containers to apply theme. */
+/* ORCA DB PANEL intentionally uses one fixed white-and-black theme. */
 export default function Theme({children}) {
-  const prefStore = usePreferences();
-  const selectedTheme =
-    prefStore?.getPreferencesForModule('misc')?.theme ||
-    window.theme ||
-    'light';
-
-  // Initialize theme state
-  const [theme, setTheme] = useState(parseSystemTheme(selectedTheme).theme);
-
-  // Memoize the theme object
-  const themeObj = useMemo(()=>{
-    let baseTheme = getLightTheme(basicSettings);
-    switch(theme) {
-    case 'dark':
-      baseTheme = getDarkTheme(baseTheme);
-      break;
-    case 'high_contrast':
-      baseTheme = getHightContrastTheme(baseTheme);
-      break;
-    }
-    return getFinalTheme(baseTheme);
-  }, [theme]);
-
-  // Handle theme updates
-  useEffect(() => {
-    let {theme, systemMatchMedia} = parseSystemTheme(selectedTheme);
-    setTheme(theme);
-
-    const updateTheme = (event) => {
-      const newTheme = event.matches ? 'dark' : 'light';
-      setTheme(newTheme);
-    };
-    systemMatchMedia?.addEventListener('change', updateTheme);
-
-    return () => {
-      systemMatchMedia?.removeEventListener('change', updateTheme);
-    };
-  },[selectedTheme]);
+  const themeObj = useMemo(() => getFinalTheme(getLightTheme(basicSettings)), []);
 
   return (
     <ThemeProvider theme={themeObj}>

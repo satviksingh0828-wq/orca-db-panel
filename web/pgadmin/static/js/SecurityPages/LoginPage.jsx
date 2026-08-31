@@ -1,6 +1,5 @@
 import { Box, Icon } from '@mui/material';
 import { useState } from 'react';
-import LoginImage from '../../img/login.svg?svgr';
 import { InputSelectNonSearch, InputText, MESSAGE_TYPE, NotifierMessage } from '../components/FormComponents';
 import BasePage, { SecurityButton } from './BasePage';
 import gettext from 'sources/gettext';
@@ -28,7 +27,7 @@ export default function LoginPage({userLanguage, langOptions, forgotPassUrl, csr
         marginRight: 'auto',
         marginLeft: 'auto'
       }} textCenter />}
-      <BasePage title={gettext('Login')} pageImage={<LoginImage style={{height: '100%', width: '100%'}} />} {...props}>
+      <BasePage title={gettext('Login')} {...props}>
         <form style={{display:'flex', gap:'15px', flexDirection:'column'}} action={loginUrl} method="POST">
           {showLoginForm &&
           <>
@@ -54,7 +53,7 @@ export default function LoginPage({userLanguage, langOptions, forgotPassUrl, csr
             const hasStyle = oauth.OAUTH2_ICON?.split(/\s+/).some((c)=>iconStyles.includes(c));
             const iconClassName = hasStyle ? oauth.OAUTH2_ICON : 'fab '+oauth.OAUTH2_ICON;
             return (
-              <SecurityButton key={oauth.OAUTH2_NAME} name="oauth2_button" value={oauth.OAUTH2_NAME} style={{backgroundColor: oauth.OAUTH2_BUTTON_COLOR}}>
+              <SecurityButton key={oauth.OAUTH2_NAME} name="oauth2_button" value={oauth.OAUTH2_NAME}>
                 <Icon className={iconClassName} style={{ fontSize: '1.5em', marginRight: '8px' }} />{gettext('Login with %s', oauth.OAUTH2_DISPLAY_NAME)}
               </SecurityButton>
             );

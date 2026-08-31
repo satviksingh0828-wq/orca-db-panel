@@ -63,6 +63,8 @@
 
      <!--View specified stylesheets-->
     {% block css_link %}{% endblock %}
+    <!-- Load the private ORCA theme after generated styles so no stale upstream palette can win. -->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='css/orca-brand.css') }}"/>
 
     <script type="application/javascript">
         /* This is used to change publicPath of webpack at runtime */
