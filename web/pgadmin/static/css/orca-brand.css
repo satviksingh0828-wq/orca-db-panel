@@ -383,3 +383,13 @@ textarea::placeholder,
     box-shadow: 4px 4px 0 var(--orca-ink) !important;
   }
 }
+
+.orca-app-icon {
+  display: inline-block;
+  width: 1.35em;
+  height: 1.35em;
+  margin-right: 0.35em;
+  vertical-align: -0.2em;
+  background: url('../img/orca-logo.svg') center / contain no-repeat !important;
+  color: transparent !important;
+}
