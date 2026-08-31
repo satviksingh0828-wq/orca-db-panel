@@ -8,20 +8,39 @@ import PropTypes from 'prop-types';
 import CustomPropTypes from '../custom_prop_types';
 
 const StyledBox = styled(Box)(() => ({
-  backgroundColor: '#ffffff',
+  backgroundColor: '#000000',
   color: '#000000',
+  position: 'relative',
+  overflow: 'hidden',
   display: 'flex',
   justifyContent: 'center',
   height: '100%',
+  '& .BasePage-bgVideo': {
+    position: 'fixed',
+    inset: 0,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    filter: 'grayscale(1) contrast(1.15) brightness(0.42)',
+  },
+  '& .BasePage-bgVeil': {
+    position: 'fixed',
+    inset: 0,
+    background: 'rgba(0, 0, 0, 0.42)',
+  },
+  '& .BasePage-layout': {
+    position: 'relative',
+    zIndex: 1,
+  },
   '& .BasePage-pageContent': {
     display: 'flex',
     flexDirection: 'column',
     padding: '24px',
     backgroundColor: '#ffffff',
     color: '#000000',
-    border: '1px solid #000000',
+    border: '2px solid #000000',
     borderRadius: 0,
-    boxShadow: 'none',
+    boxShadow: '8px 8px 0 rgba(0, 0, 0, 0.95)',
     maxHeight: '100%',
     minWidth: '450px',
     maxWidth: '450px',
@@ -38,7 +57,7 @@ const StyledBox = styled(Box)(() => ({
     },
     '& .BasePage-button': {
       backgroundColor: '#000000',
-      border: '1px solid #000000',
+      border: '2px solid #000000',
       color: '#ffffff',
       padding: '8px',
       width: '100%',
@@ -81,7 +100,11 @@ export default function BasePage({pageImage, title, children, messages}) {
   }, [messages]);
   return (
     <StyledBox className='orca-security-shell' data-test="security-page">
-      <Box display="flex" minWidth="80%" gap="40px" alignItems="center" justifyContent="center" padding="20px 80px">
+      <video className='BasePage-bgVideo' autoPlay loop muted playsInline aria-hidden="true" tabIndex="-1">
+        <source src="https://cdn.pixabay.com/video/2023/10/15/185135-874643460_large.mp4" type="video/mp4" />
+      </video>
+      <div className='BasePage-bgVeil' aria-hidden="true" />
+      <Box className='BasePage-layout' display="flex" minWidth="80%" gap="40px" alignItems="center" justifyContent="center" padding="20px 80px">
         <Box className='BasePage-illustration' aria-hidden="true" sx={{display: 'none'}}>
           {pageImage}
         </Box>
