@@ -50,10 +50,6 @@ COPY --from=pg17-builder /usr/local/bin/pg_dump /usr/local/pgsql/pgsql-17/
 COPY --from=pg17-builder /usr/local/bin/pg_dumpall /usr/local/pgsql/pgsql-17/
 COPY --from=pg17-builder /usr/local/bin/pg_restore /usr/local/pgsql/pgsql-17/
 COPY --from=pg17-builder /usr/local/bin/psql /usr/local/pgsql/pgsql-17/
-COPY --from=pg18-builder /usr/local/bin/pg_dump /usr/local/bin/pg_dump
-COPY --from=pg18-builder /usr/local/bin/pg_dumpall /usr/local/bin/pg_dumpall
-COPY --from=pg18-builder /usr/local/bin/pg_restore /usr/local/bin/pg_restore
-COPY --from=pg18-builder /usr/local/bin/psql /usr/local/bin/psql
 COPY --from=pg18-builder /usr/local/bin/pg_dump /usr/local/pgsql/pgsql-18/
 COPY --from=pg18-builder /usr/local/bin/pg_dumpall /usr/local/pgsql/pgsql-18/
 COPY --from=pg18-builder /usr/local/bin/pg_restore /usr/local/pgsql/pgsql-18/
@@ -74,19 +70,12 @@ COPY pkg/docker/run_pgadmin.py pkg/docker/gunicorn_config.py /pgadmin4/
 COPY pkg/docker/entrypoint.sh /entrypoint.sh
 COPY LICENSE /pgadmin4/LICENSE
 
-# Alpine's adduser is used instead of useradd here for Render compatibility.
-# No setcap/sudoers setup is needed because entrypoint.sh already detects
-# Render's restricted security context and falls back to $PORT.
-RUN /venv/bin/python3 -m pip install --no-cache-dir gunicorn==23.0.0 && \
-    find / -type d -name '__pycache__' -exec rm -rf {} + && \
-    adduser -D -H -u 5050 -G root -s /sbin/nologin pgadmin && \
-    mkdir -p /run/pgadmin /var/lib/pgadmin && \
-    chown pgadmin:root /run/pgadmin /var/lib/pgadmin && \
-    chmod g=u /run/pgadmin /var/lib/pgadmin && \
-    touch /pgadmin4/config_distro.py && \
-    chown pgadmin:root /pgadmin4/config_distro.py && \
-    chmod g=u /pgadmin4/config_distro.py && \
-    chmod g=u /etc/passwd
+# Keep each operation independent so a harmless cleanup failure cannot stop the build.
+RUN /venv/bin/python3 -m pip install --no-cache-dir gunicorn==23.0.0
+RUN find /venv /pgadmin4 -type d -name '__pycache__' -prune -exec rm -rf {} + || true
+RUN adduser -D -H -u 5050 -G root -s /sbin/nologin pgadmin
+RUN mkdir -p /run/pgadmin /var/lib/pgadmin && chown pgadmin:root /run/pgadmin /var/lib/pgadmin && chmod g=u /run/pgadmin /var/lib/pgadmin
+RUN touch /pgadmin4/config_distro.py && chown pgadmin:root /pgadmin4/config_distro.py && chmod g=u /pgadmin4/config_distro.py && chmod g=u /etc/passwd
 
 USER 5050
 EXPOSE 10000
