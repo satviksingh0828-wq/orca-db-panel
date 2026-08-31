@@ -186,7 +186,7 @@ export default function BrowserComponent({pgAdmin}) {
     beforeClose: (forceClose)=>{
       window.electronUI?.focus();
       pgAdmin.Browser.notifier.confirm(
-        gettext('Quit pgAdmin 4'),
+        gettext('Quit ORCA DB'),
         gettext('Are you sure you want to quit the application?'),
         function() { forceClose(); },
         function() { return true; },

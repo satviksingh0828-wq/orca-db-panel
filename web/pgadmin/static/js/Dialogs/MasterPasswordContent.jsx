@@ -64,7 +64,7 @@ export default function MasterPasswordContent({ closeModal, onResetPassowrd, onO
             </span>
             <br />
             <span style={{ fontWeight: 'bold' }}>
-              <FormNote text={gettext(`Saved passwords are encrypted using encryption key stored in ${keyringName}. Enter the master password for your existing pgAdmin saved passwords and they will be re-encrypted and saved when you click OK.`)}></FormNote>
+              <FormNote text={gettext(`Saved passwords are encrypted using encryption key stored in ${keyringName}. Enter the master password for your existing ORCA DB saved passwords and they will be re-encrypted and saved when you click OK.`)}></FormNote>
             </span>
           </Box>
           <Box marginTop='12px'>
@@ -78,7 +78,7 @@ export default function MasterPasswordContent({ closeModal, onResetPassowrd, onO
         <Box flexGrow="1" p={2}>
           <Box>
             <span style={{ fontWeight: 'bold' }}>
-              {isPWDPresent ? gettext('Please enter your master password.') : gettext('Please set a master password for pgAdmin.')}
+              {isPWDPresent ? gettext('Please enter your master password.') : gettext('Please set a master password for ORCA DB.')}
             </span>
             <br />
             <span style={{ fontWeight: 'bold' }}>

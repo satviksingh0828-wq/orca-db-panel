@@ -47,7 +47,7 @@ export function socketApiGet(socket, endpoint, params) {
       reject(new Error(parseApiError(data)));
     });
     socket.on('disconnect', ()=>{
-      reject(new Error(gettext('Connection to pgAdmin server has been lost')));
+      reject(new Error(gettext('Connection to ORCA DB server has been lost')));
     });
   });
 }
