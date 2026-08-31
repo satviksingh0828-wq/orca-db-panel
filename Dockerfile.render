@@ -1,0 +1,174 @@
+########################################################################
+# ORCA DB PANEL - Render build
+#
+# Render-specific Dockerfile.
+# The original Dockerfile is intentionally left unchanged for Railway.
+#
+# Render runs containers with restrictions that make the privileged-port
+# capability setup used by the standard image unnecessary. The entrypoint
+# already detects the restricted environment and uses $PORT when the
+# python3-cap helper is absent.
+########################################################################
+
+FROM alpine:latest AS app-builder
+
+RUN apk add --no-cache \
+    autoconf \
+    automake \
+    bash \
+    g++ \
+    git \
+    libc6-compat \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    libtool \
+    make \
+    nasm \
+    nodejs \
+    npm \
+    yarn \
+    zlib-dev
+
+COPY web /pgadmin4/web
+WORKDIR /pgadmin4/web
+
+RUN export CPPFLAGS="-DPNG_ARM_NEON_OPT=0" && \
+    npm install -g corepack && \
+    corepack enable && \
+    yarn install && \
+    yarn run bundle:dev && \
+    printf 'render-build unknown\\n' > commit_hash && \
+    rm -rf yarn.lock \
+           package.json \
+           .[^.]* \
+           babel.cfg \
+           webpack.* \
+           jest.config.js \
+           babel.*
+
+FROM python:3-alpine AS env-builder
+
+RUN apk add --no-cache \
+        make && \
+    apk add --no-cache --virtual build-deps \
+        build-base \
+        openssl-dev \
+        libffi-dev \
+        postgresql-dev \
+        krb5-dev \
+        rust \
+        cargo \
+        zlib-dev \
+        libjpeg-turbo-dev \
+        libpng-dev
+COPY requirements.txt /
+RUN python3 -m venv --system-site-packages --without-pip /venv && \
+    /venv/bin/python3 -m pip install --no-cache-dir -r requirements.txt && \
+    apk del --no-cache build-deps
+
+FROM env-builder AS docs-builder
+
+RUN /venv/bin/python3 -m pip install --no-cache-dir sphinx
+RUN /venv/bin/python3 -m pip install --no-cache-dir sphinxcontrib-youtube
+
+COPY docs /pgadmin4/docs
+COPY web /pgadmin4/web
+RUN rm -rf /pgadmin4/docs/en_US/_build
+RUN LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 /venv/bin/sphinx-build /pgadmin4/docs/en_US /pgadmin4/docs/en_US/_build/html
+RUN rm -rf /pgadmin4/docs/en_US/_build/html/.doctrees
+RUN rm -rf /pgadmin4/docs/en_US/_build/html/_sources
+RUN rm -rf /pgadmin4/docs/en_US/_build/html/_static/*.png
+
+FROM postgres:13-alpine AS pg13-builder
+FROM postgres:14-alpine AS pg14-builder
+FROM postgres:15-alpine AS pg15-builder
+FROM postgres:16-alpine AS pg16-builder
+FROM postgres:17-alpine AS pg17-builder
+FROM postgres:18-alpine AS pg18-builder
+
+FROM alpine:latest AS tool-builder
+
+COPY --from=pg13-builder /usr/local/bin/pg_dump /usr/local/pgsql/pgsql-13/
+COPY --from=pg13-builder /usr/local/bin/pg_dumpall /usr/local/pgsql/pgsql-13/
+COPY --from=pg13-builder /usr/local/bin/pg_restore /usr/local/pgsql/pgsql-13/
+COPY --from=pg13-builder /usr/local/bin/psql /usr/local/pgsql/pgsql-13/
+
+COPY --from=pg14-builder /usr/local/bin/pg_dump /usr/local/pgsql/pgsql-14/
+COPY --from=pg14-builder /usr/local/bin/pg_dumpall /usr/local/pgsql/pgsql-14/
+COPY --from=pg14-builder /usr/local/bin/pg_restore /usr/local/pgsql/pgsql-14/
+COPY --from=pg14-builder /usr/local/bin/psql /usr/local/pgsql/pgsql-14/
+
+COPY --from=pg15-builder /usr/local/bin/pg_dump /usr/local/pgsql/pgsql-15/
+COPY --from=pg15-builder /usr/local/bin/pg_dumpall /usr/local/pgsql/pgsql-15/
+COPY --from=pg15-builder /usr/local/bin/pg_restore /usr/local/pgsql/pgsql-15/
+COPY --from=pg15-builder /usr/local/bin/psql /usr/local/pgsql/pgsql-15/
+
+COPY --from=pg16-builder /usr/local/bin/pg_dump /usr/local/pgsql/pgsql-16/
+COPY --from=pg16-builder /usr/local/bin/pg_dumpall /usr/local/pgsql/pgsql-16/
+COPY --from=pg16-builder /usr/local/bin/pg_restore /usr/local/pgsql/pgsql-16/
+COPY --from=pg16-builder /usr/local/bin/psql /usr/local/pgsql/pgsql-16/
+
+COPY --from=pg17-builder /usr/local/bin/pg_dump /usr/local/pgsql/pgsql-17/
+COPY --from=pg17-builder /usr/local/bin/pg_dumpall /usr/local/pgsql/pgsql-17/
+COPY --from=pg17-builder /usr/local/bin/pg_restore /usr/local/pgsql/pgsql-17/
+COPY --from=pg17-builder /usr/local/bin/psql /usr/local/pgsql/pgsql-17/
+
+COPY --from=pg18-builder /usr/local/bin/pg_dump /usr/local/pgsql/pgsql-18/
+COPY --from=pg18-builder /usr/local/bin/pg_dumpall /usr/local/pgsql/pgsql-18/
+COPY --from=pg18-builder /usr/local/bin/pg_restore /usr/local/pgsql/pgsql-18/
+COPY --from=pg18-builder /usr/local/bin/psql /usr/local/pgsql/pgsql-18/
+
+FROM python:3-alpine
+
+RUN apk update && apk upgrade && \
+    apk add \
+        bash \
+        postfix \
+        krb5-libs \
+        libcurl \
+        libjpeg-turbo \
+        shadow \
+        sudo \
+        tzdata \
+        libedit \
+        libldap \
+        libcap \
+        su-exec && \
+    rm -rf /var/cache/apk/*
+
+COPY --from=env-builder /venv /venv
+COPY --from=tool-builder /usr/local/pgsql /usr/local/
+COPY --from=pg18-builder /usr/local/lib/libpq.so.5.18 /usr/local/lib/libpq-oauth-18.so /usr/lib/liblz4.so.1.10.0 /usr/lib/
+
+RUN ln -s libpq.so.5.18 /usr/lib/libpq.so.5 && \
+    ln -s libpq.so.5.18 /usr/lib/libpq.so && \
+    ln -s liblz4.so.1.10.0 /usr/lib/liblz4.so.1
+
+WORKDIR /pgadmin4
+ENV PYTHONPATH=/pgadmin4
+
+COPY --from=app-builder /pgadmin4/web /pgadmin4
+COPY --from=docs-builder /pgadmin4/docs/en_US/_build/html/ /pgadmin4/docs
+COPY pkg/docker/run_pgadmin.py pkg/docker/gunicorn_config.py /pgadmin4/
+COPY pkg/docker/entrypoint.sh /entrypoint.sh
+COPY LICENSE /pgadmin4/LICENSE
+
+# Render-specific: do not install the privileged-port capability helper or
+# create sudoers rules for Postfix. The entrypoint falls back to the normal
+# venv Python and uses Render's PORT automatically when python3-cap is absent.
+RUN /venv/bin/python3 -m pip install --no-cache-dir gunicorn==23.0.0 && \
+    find / -type d -name '__pycache__' -exec rm -rf {} + && \
+    useradd -r -u 5050 -g root -s /sbin/nologin pgadmin && \
+    mkdir -p /run/pgadmin /var/lib/pgadmin && \
+    chown pgadmin:root /run/pgadmin /var/lib/pgadmin && \
+    chmod g=u /run/pgadmin /var/lib/pgadmin && \
+    touch /pgadmin4/config_distro.py && \
+    chown pgadmin:root /pgadmin4/config_distro.py && \
+    chmod g=u /pgadmin4/config_distro.py && \
+    chmod g=u /etc/passwd
+
+USER 5050
+
+EXPOSE 10000
+
+ENTRYPOINT ["/entrypoint.sh"]
