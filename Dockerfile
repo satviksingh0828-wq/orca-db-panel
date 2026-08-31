@@ -36,10 +36,7 @@ COPY web /pgadmin4/web
 WORKDIR /pgadmin4/web
 
 # Build the JS vendor code in the app-builder, and then remove the vendor source.
-RUN --mount=type=bind,source=.git,target=/pgadmin4/.git \
-    --mount=type=tmpfs,target=node_modules \
-    --mount=type=tmpfs,target=pgadmin/static/js/generated/.cache \
-    export CPPFLAGS="-DPNG_ARM_NEON_OPT=0" && \
+RUN export CPPFLAGS="-DPNG_ARM_NEON_OPT=0" && \
     npm install -g corepack && \
     corepack enable && \
     yarn install && \
@@ -212,7 +209,8 @@ RUN /venv/bin/python3 -m pip install --no-cache-dir gunicorn==23.0.0 && \
 USER 5050
 
 # Finish up
-VOLUME /var/lib/pgadmin
+# Railway manages persistent storage separately. Attach a Railway Volume at
+# /var/lib/pgadmin in the service settings; do not declare Docker VOLUME here.
 EXPOSE 80 443
 
 ENTRYPOINT ["/entrypoint.sh"]

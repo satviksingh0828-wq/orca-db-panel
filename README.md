@@ -286,3 +286,7 @@ If you wish to discuss pgAdmin 4, or contribute to the project, please use the
 pgAdmin Hackers mailing list:
 
 pgadmin-hackers@postgresql.org
+
+## Railway deployment
+
+This Dockerfile is compatible with Railway’s builder and does not declare a Docker-managed `VOLUME`. In the Railway service settings, create or attach a Railway Volume and mount it at `/var/lib/pgadmin`. This path stores the ORCA DB PANEL configuration database and user data. Configure the service to expose the container’s HTTP port and keep the existing application environment variables used by the upstream container deployment.
