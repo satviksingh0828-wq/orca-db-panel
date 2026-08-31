@@ -1,55 +1,144 @@
-/* ORCA DB PANEL monochrome brand layer. */
 :root {
   --orca-black: #000000;
   --orca-white: #ffffff;
-  --orca-ink: #111111;
-  --orca-muted: #666666;
-  --orca-line: #d7d7d7;
 }
 
-html, body {
-  background: var(--orca-white);
-  color: var(--orca-ink);
+/* ORCA DB PANEL is intentionally restricted to a pure black-and-white palette. */
+html,
+body,
+#root {
+  background: var(--orca-white) !important;
+  color: var(--orca-black) !important;
 }
 
-a, a:hover, a:focus {
-  color: var(--orca-black);
+body,
+button,
+input,
+select,
+textarea,
+.tooltip,
+.popover,
+.dropdown-menu,
+.modal-content,
+.card,
+.panel,
+.form-control,
+.btn,
+.nav,
+.navbar,
+.table,
+.list-group,
+.treeview {
+  color: var(--orca-black) !important;
+  background-color: var(--orca-white) !important;
+  border-color: var(--orca-black) !important;
 }
 
-button, .btn, input, select, textarea, .form-control {
-  border-color: var(--orca-line);
-  color: var(--orca-ink);
+* {
+  border-color: var(--orca-black) !important;
 }
 
-.btn-primary, .btn-info, .btn-success, .btn-warning, .btn-danger,
-.bg-primary, .bg-info, .bg-success, .bg-warning, .bg-danger {
+a,
+a:hover,
+a:focus,
+a:active,
+button,
+.btn-link,
+.text-primary,
+.text-info,
+.text-success,
+.text-warning,
+.text-danger,
+.text-muted {
+  color: var(--orca-black) !important;
+}
+
+.btn,
+.btn-primary,
+.btn-info,
+.btn-success,
+.btn-warning,
+.btn-danger,
+.btn-secondary,
+.btn-dark,
+.btn-light,
+.bg-primary,
+.bg-info,
+.bg-success,
+.bg-warning,
+.bg-danger,
+.bg-secondary,
+.bg-dark,
+.badge,
+.navbar-dark,
+.navbar-inverse,
+.panel-header,
+.modal-header,
+.topbar {
   background-color: var(--orca-black) !important;
   border-color: var(--orca-black) !important;
   color: var(--orca-white) !important;
 }
 
-.btn-primary:hover, .btn-info:hover, .btn-success:hover, .btn-warning:hover,
-.btn-danger:hover, .btn-primary:focus, .btn-info:focus, .btn-success:focus,
-.btn-warning:focus, .btn-danger:focus {
-  background-color: var(--orca-ink) !important;
-  border-color: var(--orca-ink) !important;
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background-color: var(--orca-white) !important;
+  border-color: var(--orca-black) !important;
+  color: var(--orca-black) !important;
 }
 
-.navbar, .topbar, .panel-header, .modal-header {
-  background: var(--orca-black) !important;
+.navbar a,
+.navbar button,
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar-dark a,
+.navbar-inverse a,
+.panel-header a,
+.panel-header button,
+.modal-header,
+.modal-header button,
+.topbar a,
+.topbar button {
   color: var(--orca-white) !important;
 }
 
-.navbar a, .topbar a, .panel-header a, .modal-header button {
+.form-control:focus,
+select:focus,
+textarea:focus,
+input:focus,
+button:focus,
+.btn:focus {
+  background-color: var(--orca-white) !important;
+  border-color: var(--orca-black) !important;
+  box-shadow: 0 0 0 2px var(--orca-black) !important;
+  color: var(--orca-black) !important;
+}
+
+.table-striped tbody tr:nth-of-type(odd),
+.table-hover tbody tr:hover,
+.dropdown-item:hover,
+.dropdown-item:focus,
+.list-group-item-action:hover,
+.list-group-item-action:focus,
+.nav-tabs .nav-link.active,
+.nav-pills .nav-link.active {
+  background-color: var(--orca-black) !important;
   color: var(--orca-white) !important;
 }
 
-.pg-sp-container {
-  background: rgba(0, 0, 0, 0.82) !important;
-}
-
-.pg-sp-text {
-  color: var(--orca-white) !important;
+hr,
+.table th,
+.table td,
+.dropdown-divider {
+  border-color: var(--orca-black) !important;
 }
 
 ::selection {
@@ -57,9 +146,9 @@ button, .btn, input, select, textarea, .form-control {
   color: var(--orca-white);
 }
 
-/* Replace the legacy colored application icon with the ORCA mark. */
+/* Replace legacy application marks with the exact supplied ORCA logo. */
 .app-icon {
-  background: url('../img/orca-logo.png') center / contain no-repeat !important;
+  background: url('../img/orca-logo.svg') center / contain no-repeat !important;
   color: transparent !important;
   width: 1.5em;
   height: 1.5em;
@@ -67,7 +156,7 @@ button, .btn, input, select, textarea, .form-control {
 }
 
 .pg-sp-icon {
-  background-image: url('../img/orca-logo.png') !important;
+  background-image: url('../img/orca-logo.svg') !important;
   background-size: 75px 75px !important;
 }
 
@@ -76,7 +165,7 @@ button, .btn, input, select, textarea, .form-control {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  color: #000000;
+  color: var(--orca-black);
 }
 
 .orca-welcome-logo img {
@@ -86,7 +175,7 @@ button, .btn, input, select, textarea, .form-control {
 }
 
 .orca-welcome-wordmark {
-  color: #000000;
+  color: var(--orca-black);
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: 0.08em;
@@ -97,6 +186,7 @@ button, .btn, input, select, textarea, .form-control {
   .orca-welcome-logo {
     flex-direction: column;
   }
+
   .orca-welcome-wordmark {
     font-size: 1.35rem;
   }

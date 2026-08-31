@@ -66,7 +66,7 @@ const menuCallbacks = {
         position: 'center',
         resizable: false,
         parent: pgAdminMainScreen,
-        icon: '../../assets/pgAdmin4.png',
+        icon: '../../assets/orca-logo.svg',
         webPreferences: {
           preload: path.join(__dirname, 'other_preload.js'),
         },
@@ -144,7 +144,7 @@ function openConfigure() {
       position: 'center',
       resizable: false,
       parent: pgAdminMainScreen,
-      icon: '../../assets/pgAdmin4.png',
+      icon: '../../assets/orca-logo.svg',
       webPreferences: {
         preload: path.join(__dirname, 'other_preload.js'),
       },
@@ -174,7 +174,7 @@ function showErrorDialog(timeoutID) {
     'resizable': false,
     'focus': true,
     'show': true,
-    icon: '../../assets/pgAdmin4.png',
+    icon: '../../assets/orca-logo.svg',
     webPreferences: {
       preload: path.join(__dirname, 'other_preload.js'),
     },
@@ -362,7 +362,7 @@ function launchPgAdminWindow() {
   misc.writeServerLog('Application Server URL: ' + startPageUrl);
   pgAdminMainScreen = new BrowserWindow({
     'id': 'pgadmin-main',
-    'icon': '../../assets/pgAdmin4.png',
+    'icon': '../../assets/orca-logo.svg',
     'frame': true,
     'position': 'center',
     'resizable': true,
@@ -423,7 +423,7 @@ function launchPgAdminWindow() {
           'position': 'center',
           'minWidth': 640,
           'minHeight': 480,
-          icon: '../../assets/pgAdmin4.png',
+          icon: '../../assets/orca-logo.svg',
           ...pgAdminMainScreen.getBounds(),
           webPreferences: {
             preload: path.join(__dirname, 'pgadmin_preload.js'),

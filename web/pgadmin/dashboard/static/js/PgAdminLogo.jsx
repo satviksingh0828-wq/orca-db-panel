@@ -6,10 +6,10 @@
 //
 //////////////////////////////////////////////////////////////
 
-export default function PgAdminLogo() {
+export default function OrcaDbPanelLogo() {
   return (
     <div className="welcome-logo orca-welcome-logo" aria-label="ORCA DB PANEL">
-      <img src="/static/img/orca-logo.png" alt="ORCA DB PANEL logo" />
+      <img src="/static/img/orca-logo.svg" alt="ORCA DB PANEL logo" />
       <div className="orca-welcome-wordmark">ORCA DB PANEL</div>
     </div>
   );

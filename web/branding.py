@@ -21,7 +21,7 @@ APP_PATH = 'pgadmin'  # Keep the upstream container data path /var/lib/pgadmin c
 APP_WIN_PATH = "pgAdmin"  # Keep existing desktop data locations compatible.
 
 # Copyright string for display in the app
-APP_COPYRIGHT = 'ORCA DB PANEL — derived from pgAdmin 4; Copyright (C) 2013 - 2026, the pgAdmin Development Team'
+APP_COPYRIGHT = 'ORCA DB PANEL'
 
 # User ID (email address) to use for the default user in desktop mode.
 # The default should be fine here, as it's not exposed in the app.
