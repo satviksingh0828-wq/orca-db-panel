@@ -28,7 +28,7 @@ export default function LoginPage({userLanguage, langOptions, forgotPassUrl, csr
         marginLeft: 'auto'
       }} textCenter />}
       <BasePage title={gettext('Login')} {...props}>
-        <form style={{display:'flex', gap:'15px', flexDirection:'column'}} action={loginUrl} method="POST">
+        <form className="orca-login-form" style={{display:'flex', gap:'15px', flexDirection:'column'}} action={loginUrl} method="POST">
           {showLoginForm &&
           <>
             <input name="csrf_token" defaultValue={csrfToken} hidden/>

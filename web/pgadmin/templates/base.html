@@ -103,7 +103,7 @@
     <script type="application/javascript" src="{{ url_for('static', filename='js/generated/pgadmin_commons.js') }}" ></script>
 
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 <style>
 body {
   -webkit-user-select: none;
@@ -118,18 +118,20 @@ body {
 }
 </style>
 
-<div id="orca-splash-overlay" aria-label="ORCA DB PANEL loading" role="status">
-    <iframe src="{{ url_for('static', filename='orca-solutions-start-animation.html') }}" title="ORCA DB PANEL loading animation"></iframe>
+{% block splash_overlay %}
+<div id="orca-splash-overlay" aria-label="ORCA DB loading" role="status">
+    <iframe src="{{ url_for('static', filename='orca-solutions-start-animation.html') }}" title="ORCA DB loading animation"></iframe>
 </div>
 <script>
     window.setTimeout(function () {
         var splash = document.getElementById('orca-splash-overlay');
         if (splash) {
             splash.classList.add('is-hidden');
-            window.setTimeout(function () { splash.remove(); }, 260);
+            window.setTimeout(function () { splash.remove(); }, 280);
         }
     }, 2800);
 </script>
+{% endblock %}
 <!--[if lt IE 7]>
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
     your browser</a> to improve your experience.</p>

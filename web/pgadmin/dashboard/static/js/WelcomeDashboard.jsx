@@ -160,7 +160,7 @@ export default function WelcomeDashboard({ pgBrowser }) {
                 </h4>
                 <p>
                   {gettext(
-                    'ORCA DB PANEL is an Open Source administration and management tool for the PostgreSQL database. It includes a graphical administration interface, an SQL query tool, a procedural code debugger and much more. The tool is designed to answer the needs of developers, DBAs and system administrators alike.'
+                    'ORCA DB is an Open Source administration and management tool for the PostgreSQL database. It includes a graphical administration interface, an SQL query tool, a procedural code debugger and much more. The tool is designed to answer the needs of developers, DBAs and system administrators alike.'
                   )}
                 </p>
               </div>
@@ -193,7 +193,7 @@ export default function WelcomeDashboard({ pgBrowser }) {
                           aria-hidden="true"
                         ></span>
                       </div>
-                      {gettext('Configure ORCA DB PANEL')}
+                      {gettext('Configure ORCA DB')}
                     </Link>
                   </div>
                 </div>
@@ -230,7 +230,7 @@ export default function WelcomeDashboard({ pgBrowser }) {
                           aria-hidden="true"
                         ></span>
                       </div>
-                      {gettext('ORCA DB PANEL Website')}
+                      {gettext('ORCA DB Website')}
                     </a>
                   </div>
                   <div className='WelcomeDashboard-gettingStartedLink'>

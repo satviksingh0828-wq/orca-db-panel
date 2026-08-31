@@ -80,17 +80,17 @@ export default function BasePage({pageImage, title, children, messages}) {
     });
   }, [messages]);
   return (
-    <StyledBox>
+    <StyledBox className='orca-security-shell' data-test="security-page">
       <Box display="flex" minWidth="80%" gap="40px" alignItems="center" justifyContent="center" padding="20px 80px">
         <Box className='BasePage-illustration' aria-hidden="true" sx={{display: 'none'}}>
           {pageImage}
         </Box>
         <Box className='BasePage-pageContent'>
           <Box className='BasePage-item'>
-            <div className='BasePage-logo' aria-label="ORCA DB PANEL logo" role="img" />
+            <div className='BasePage-logo' aria-label="ORCA DB logo" role="img" />
           </Box>
           <Box className='BasePage-item' sx={{flexDirection: 'column', gap: '4px'}}>
-            <span style={{fontWeight: 800, letterSpacing: '0.12em'}}>ORCA DB PANEL</span>
+            <span style={{fontWeight: 800, letterSpacing: '0.12em'}}>ORCA DB</span>
             <span style={{fontSize: '0.68rem', letterSpacing: '0.16em'}}>SECURE DATABASE WORKSPACE</span>
           </Box>
           <Box className='BasePage-item'>{title}</Box>

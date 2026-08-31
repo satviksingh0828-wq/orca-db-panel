@@ -8,10 +8,10 @@
 
 export default function OrcaDbPanelLogo() {
   return (
-    <div className="welcome-logo orca-welcome-logo" aria-label="ORCA DB PANEL">
-      <img src="/static/img/orca-logo.svg" alt="ORCA DB PANEL logo" />
+    <div className="welcome-logo orca-welcome-logo" aria-label="ORCA DB">
+      <img src="/static/img/orca-logo.svg" alt="ORCA DB logo" />
       <div className="orca-welcome-copy">
-        <div className="orca-welcome-wordmark">ORCA DB PANEL</div>
+        <div className="orca-welcome-wordmark">ORCA DB</div>
         <div className="orca-welcome-tagline">PRIVATE DATABASE CONTROL CENTER</div>
       </div>
     </div>

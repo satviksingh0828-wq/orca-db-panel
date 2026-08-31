@@ -3,7 +3,7 @@
   --orca-white: #ffffff;
 }
 
-/* ORCA DB PANEL is intentionally restricted to a pure black-and-white palette. */
+/* ORCA DB is intentionally restricted to a pure black-and-white palette. */
 html,
 body,
 #root {
@@ -218,13 +218,13 @@ hr,
   }
 }
 
-/* Orca light theme: a restrained black/white system with quiet grayscale surfaces. */
+/* ORCA DB light theme: a strict black-and-white system. */
 :root {
   --orca-ink: #0a0a0a;
   --orca-paper: #ffffff;
-  --orca-mist: #f4f4f4;
-  --orca-line: #1b1b1b;
-  --orca-muted: #5b5b5b;
+  --orca-mist: #ffffff;
+  --orca-line: #000000;
+  --orca-muted: #000000;
 }
 
 html,
@@ -392,4 +392,62 @@ textarea::placeholder,
   vertical-align: -0.2em;
   background: url('../img/orca-logo.svg') center / contain no-repeat !important;
   color: transparent !important;
+}
+
+/* Authentication pages are a separate surface: never show the application header or splash here. */
+body.orca-security-page {
+  background: #ffffff !important;
+  color: #000000 !important;
+  color-scheme: light;
+  overflow: hidden;
+}
+
+body.orca-security-page #root {
+  min-height: 100vh;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+body.orca-security-page [data-test="app-menu-bar"],
+body.orca-security-page .AppMenuBar,
+body.orca-security-page .app-menu-bar,
+body.orca-security-page #orca-splash-overlay {
+  display: none !important;
+}
+
+body.orca-security-page .orca-security-shell {
+  min-height: 100vh;
+  width: 100%;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.orca-security-page .orca-security-shell > .MuiBox-root {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body.orca-security-page .BasePage-pageContent {
+  box-sizing: border-box;
+  width: min(450px, calc(100vw - 32px));
+  min-width: min(450px, calc(100vw - 32px));
+  max-width: 450px;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+body.orca-security-page .orca-login-form {
+  width: 100%;
+}
+
+@media (max-width: 640px) {
+  body.orca-security-page .orca-security-shell > .MuiBox-root {
+    padding: 16px !important;
+  }
+
+  body.orca-security-page .BasePage-pageContent {
+    min-width: 0;
+    width: 100%;
+  }
 }

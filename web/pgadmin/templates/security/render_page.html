@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ config.APP_NAME }}{% endblock %}
+{% block body_class %}orca-security-page{% endblock %}
+{% block splash_overlay %}{% endblock %}
 {% set other_props = {
     'messages': get_flashed_messages(with_categories=true)
 } %}

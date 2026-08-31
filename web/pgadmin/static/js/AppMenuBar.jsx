@@ -131,9 +131,9 @@ export default function AppMenuBar() {
 
   return (
     <StyledBox data-test="app-menu-bar">
-      <div className='AppMenuBar-brand' aria-label="ORCA DB PANEL">
+      <div className='AppMenuBar-brand' aria-label="ORCA DB">
         <div className='AppMenuBar-logo' aria-hidden="true" />
-        <span className='AppMenuBar-wordmark'>ORCA DB PANEL</span>
+        <span className='AppMenuBar-wordmark'>ORCA DB</span>
       </div>
       <div className='AppMenuBar-menus'>
         {pgAdmin.Browser.MainMenus?.map((menu)=>{
