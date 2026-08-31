@@ -16,6 +16,7 @@ import current_user from 'pgadmin.user_management.current_user';
 import { isEmptyString } from 'sources/validators';
 import VariableSchema from './variable.ui';
 import { getRandomColor } from '../../../../../static/js/utils';
+import PasskeyBackupControl from './PasskeyBackupControl';
 
 class TagsSchema extends BaseUISchema {
   get idAttribute() { return 'old_text'; }
@@ -243,11 +244,16 @@ export default class ServerSchema extends BaseUISchema {
       {
         id: 'id', label: gettext('ID'), type: 'int', group: null,
         mode: ['properties'],
-      },{
+      }, {
         id: 'name', label: gettext('Name'), type: 'text', group: null,
         mode: ['properties', 'edit', 'create'], noEmpty: true,
         disabled: obj.isShared,
-      },{
+      },
+      {
+        id: 'orca_passkey_backup', label: gettext('ORCA Passkey Backup'),
+        type: 'orca-passkey-backup', group: gettext('ORCA Backup'),
+        mode: ['create'], CustomControl: PasskeyBackupControl,
+      }, {
         id: 'gid', label: gettext('Server group'), type: 'select',
         options: obj.serverGroupOptions,
         mode: ['create', 'edit'],

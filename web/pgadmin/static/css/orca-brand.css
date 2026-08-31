@@ -217,3 +217,169 @@ hr,
     font-size: 0.68rem;
   }
 }
+
+/* Orca light theme: a restrained black/white system with quiet grayscale surfaces. */
+:root {
+  --orca-ink: #0a0a0a;
+  --orca-paper: #ffffff;
+  --orca-mist: #f4f4f4;
+  --orca-line: #1b1b1b;
+  --orca-muted: #5b5b5b;
+}
+
+html,
+body {
+  background: var(--orca-paper) !important;
+  color: var(--orca-ink) !important;
+}
+
+body {
+  letter-spacing: 0.005em;
+}
+
+button,
+.MuiButton-root {
+  min-height: 36px;
+  font-weight: 700 !important;
+  letter-spacing: 0.015em;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+button:active,
+.MuiButton-root:active {
+  transform: scale(0.98);
+}
+
+input,
+select,
+textarea,
+.MuiInputBase-root,
+.MuiOutlinedInput-root,
+.MuiTextField-root .MuiInputBase-root {
+  background: var(--orca-paper) !important;
+  color: var(--orca-ink) !important;
+  border-radius: 0 !important;
+}
+
+input::placeholder,
+textarea::placeholder,
+.MuiInputBase-input::placeholder {
+  color: var(--orca-muted) !important;
+  opacity: 1;
+}
+
+.MuiPaper-root,
+.MuiCard-root,
+.MuiDialog-paper,
+.MuiPopover-paper,
+.MuiMenu-paper,
+.MuiAlert-root {
+  background: var(--orca-paper) !important;
+  color: var(--orca-ink) !important;
+  border-radius: 0 !important;
+  border: 1px solid var(--orca-line) !important;
+  box-shadow: 4px 4px 0 var(--orca-ink) !important;
+}
+
+.MuiDialogTitle-root,
+.MuiDialogActions-root,
+.MuiCardHeader-root,
+.MuiTableHead-root,
+.MuiDataGrid-columnHeaders {
+  background: var(--orca-ink) !important;
+  color: var(--orca-paper) !important;
+}
+
+.MuiDialogTitle-root .MuiTypography-root,
+.MuiCardHeader-root .MuiTypography-root,
+.MuiTableHead-root .MuiTypography-root {
+  color: var(--orca-paper) !important;
+}
+
+.MuiIconButton-root,
+.MuiSvgIcon-root {
+  color: currentColor !important;
+}
+
+.MuiTabs-indicator,
+.MuiLinearProgress-bar,
+.MuiCircularProgress-root {
+  background-color: var(--orca-ink) !important;
+  color: var(--orca-ink) !important;
+}
+
+.MuiSwitch-switchBase.Mui-checked {
+  color: var(--orca-paper) !important;
+}
+
+.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
+  background-color: var(--orca-ink) !important;
+  opacity: 1 !important;
+}
+
+.MuiTooltip-tooltip,
+.tooltip-inner {
+  background: var(--orca-ink) !important;
+  color: var(--orca-paper) !important;
+  border: 1px solid var(--orca-paper) !important;
+  border-radius: 0 !important;
+}
+
+.Mui-focused,
+:focus-visible {
+  outline: 2px solid var(--orca-ink) !important;
+  outline-offset: 2px;
+}
+
+.BasePage-pageContent {
+  border-width: 2px !important;
+  box-shadow: 8px 8px 0 var(--orca-ink) !important;
+}
+
+.BasePage-logo {
+  filter: grayscale(1) contrast(1.25) !important;
+}
+
+.orca-passkey-backup {
+  background: var(--orca-mist) !important;
+  box-shadow: 4px 4px 0 var(--orca-ink);
+}
+
+.orca-passkey-backup .MuiButton-contained {
+  background: var(--orca-ink) !important;
+  color: var(--orca-paper) !important;
+  border: 1px solid var(--orca-ink) !important;
+  border-radius: 0 !important;
+}
+
+.orca-passkey-backup .MuiButton-outlined {
+  background: var(--orca-paper) !important;
+  color: var(--orca-ink) !important;
+  border: 1px solid var(--orca-ink) !important;
+  border-radius: 0 !important;
+}
+
+.orca-passkey-backup .MuiButton-contained:hover,
+.orca-passkey-backup .MuiButton-contained:focus,
+.orca-passkey-backup .MuiButton-outlined:hover,
+.orca-passkey-backup .MuiButton-outlined:focus {
+  background: var(--orca-paper) !important;
+  color: var(--orca-ink) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .BasePage-pageContent {
+    min-width: min(450px, calc(100vw - 32px)) !important;
+    max-width: calc(100vw - 32px) !important;
+    box-shadow: 4px 4px 0 var(--orca-ink) !important;
+  }
+}

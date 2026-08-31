@@ -13,12 +13,12 @@ describe('Graphs.js', ()=>{
       datasets: [{
         label: 'Label1',
         data: [],
-        borderColor: '#1F77B4',
+        borderColor: '#000000',
         pointHitRadius: DATA_POINT_SIZE,
       },{
         label: 'Label2',
         data: [],
-        borderColor: '#FF7F0E',
+        borderColor: '#ffffff',
         pointHitRadius: DATA_POINT_SIZE,
       }],
       refreshRate: 1,

@@ -86,7 +86,13 @@ export default function BasePage({pageImage, title, children, messages}) {
           {pageImage}
         </Box>
         <Box className='BasePage-pageContent'>
-          <Box className='BasePage-item'><div className='BasePage-logo' aria-label="ORCA DB PANEL" role="img" /></Box>
+          <Box className='BasePage-item'>
+            <div className='BasePage-logo' aria-label="ORCA DB PANEL logo" role="img" />
+          </Box>
+          <Box className='BasePage-item' sx={{flexDirection: 'column', gap: '4px'}}>
+            <span style={{fontWeight: 800, letterSpacing: '0.12em'}}>ORCA DB PANEL</span>
+            <span style={{fontSize: '0.68rem', letterSpacing: '0.16em'}}>SECURE DATABASE WORKSPACE</span>
+          </Box>
           <Box className='BasePage-item'>{title}</Box>
           <Box display="flex" flexDirection="column" minHeight={0}>{children}</Box>
         </Box>
