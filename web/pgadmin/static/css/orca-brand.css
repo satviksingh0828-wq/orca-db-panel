@@ -3,155 +3,174 @@
   --orca-white: #ffffff;
 }
 
-/* ORCA DB is intentionally restricted to a pure black-and-white palette. */
-html,
-body,
-#root {
-  background: var(--orca-white) !important;
-  color: var(--orca-black) !important;
+html, body, #root {
+  background: #ffffff !important;
+  color: #000000 !important;
 }
 
-body,
-button,
-input,
-select,
-textarea,
-.tooltip,
-.popover,
-.dropdown-menu,
-.modal-content,
-.card,
-.panel,
-.form-control,
-.btn,
-.nav,
-.navbar,
-.table,
-.list-group,
-.treeview {
-  color: var(--orca-black) !important;
-  background-color: var(--orca-white) !important;
-  border-color: var(--orca-black) !important;
+/* ORCA black/white theme with explicit foregrounds for controls and grids. */
+body, button, input, select, textarea, .tooltip, .popover, .dropdown-menu,
+.modal-content, .card, .panel, .form-control, .btn, .nav, .navbar,
+.table, .list-group, .treeview {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+  border-color: #000000 !important;
 }
 
-* {
-  border-color: var(--orca-black) !important;
+input, select, textarea,
+.MuiInputBase-root, .MuiOutlinedInput-root,
+.MuiTextField-root .MuiInputBase-root,
+.ag-root-wrapper, .ag-root, .ag-body-viewport, .ag-center-cols-viewport,
+.ag-center-cols-container, .ag-row, .ag-cell, .slick-pane, .slick-viewport,
+.slick-row, .slick-cell {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
 }
 
-a,
-a:hover,
-a:focus,
-a:active,
-button,
-.btn-link,
-.text-primary,
-.text-info,
-.text-success,
-.text-warning,
-.text-danger,
-.text-muted {
-  color: var(--orca-black) !important;
+/* Table/grid headers: never inherit a black foreground on a black header. */
+.ag-header, .ag-header-viewport, .ag-header-container,
+.ag-header-row, .ag-header-cell, .ag-header-cell-label,
+.ag-header-cell-text, .slick-header, .slick-header-columns,
+.slick-header-column, .slick-header-column span,
+.table thead, .table thead th, .table th {
+  background: #000000 !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
-.btn,
-.btn-primary,
-.btn-info,
-.btn-success,
-.btn-warning,
-.btn-danger,
-.btn-secondary,
-.btn-dark,
-.btn-light,
-.bg-primary,
-.bg-info,
-.bg-success,
-.bg-warning,
-.bg-danger,
-.bg-secondary,
-.bg-dark,
-.badge,
-.navbar-dark,
-.navbar-inverse,
-.panel-header,
-.modal-header,
-.topbar {
-  background-color: var(--orca-black) !important;
-  border-color: var(--orca-black) !important;
-  color: var(--orca-white) !important;
+/* Table editor column-name/header variants used by pgAdmin releases. */
+.pgadmin-table-editor .column-name,
+.pgadmin-table-editor .column-header,
+.pgadmin-table-editor [class*="columnName"],
+.pgadmin-table-editor [class*="column-name"],
+.pgadmin-table-editor [class*="header-cell"],
+[data-test="table-editor"] .column-name,
+[data-test="table-editor"] .column-header {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
-.btn:hover,
-.btn:focus,
-.btn:active,
-.btn.active,
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-secondary:hover,
-.btn-secondary:focus,
-.btn-secondary:active {
-  background-color: var(--orca-white) !important;
-  border-color: var(--orca-black) !important;
-  color: var(--orca-black) !important;
+.ag-cell-value, .ag-cell-wrapper, .slick-cell, .slick-cell *,
+.ag-header-cell *, .ag-header-cell-label * {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
 }
 
-.navbar a,
-.navbar button,
-.navbar .nav-link,
-.navbar .navbar-brand,
-.navbar-dark a,
-.navbar-inverse a,
-.panel-header a,
-.panel-header button,
-.modal-header,
-.modal-header button,
-.topbar a,
-.topbar button {
-  color: var(--orca-white) !important;
+/* Selected/focused cells remain readable. */
+.ag-row-selected .ag-cell,
+.ag-cell-focus, .slick-cell.selected, .slick-cell.active {
+  background: #000000 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
 
-.form-control:focus,
-select:focus,
-textarea:focus,
-input:focus,
-button:focus,
-.btn:focus {
-  background-color: var(--orca-white) !important;
-  border-color: var(--orca-black) !important;
-  box-shadow: 0 0 0 2px var(--orca-black) !important;
-  color: var(--orca-black) !important;
+* { border-color: #000000 !important; }
+
+a, a:hover, a:focus, a:active, button, .btn-link,
+.text-primary, .text-info, .text-success, .text-warning,
+.text-danger, .text-muted { color: #000000 !important; }
+
+.btn, .btn-primary, .btn-info, .btn-success, .btn-warning,
+.btn-danger, .btn-secondary, .btn-dark, .btn-light,
+.bg-primary, .bg-info, .bg-success, .bg-warning, .bg-danger,
+.bg-secondary, .bg-dark, .badge, .navbar-dark, .navbar-inverse,
+.panel-header, .modal-header, .topbar {
+  background-color: #000000 !important;
+  border-color: #000000 !important;
+  color: #ffffff !important;
 }
 
-.table-striped tbody tr:nth-of-type(odd),
-.table-hover tbody tr:hover,
-.dropdown-item:hover,
-.dropdown-item:focus,
-.list-group-item-action:hover,
-.list-group-item-action:focus,
-.nav-tabs .nav-link.active,
-.nav-pills .nav-link.active {
-  background-color: var(--orca-black) !important;
-  color: var(--orca-white) !important;
+.navbar a, .navbar button, .navbar .nav-link, .navbar .navbar-brand,
+.navbar-dark a, .navbar-inverse a, .panel-header a,
+.panel-header button, .modal-header, .modal-header button,
+.topbar a, .topbar button { color: #ffffff !important; }
+
+.btn:hover, .btn:focus, .btn:active, .btn.active,
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active,
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
+  background-color: #ffffff !important;
+  border-color: #000000 !important;
+  color: #000000 !important;
 }
 
-hr,
-.table th,
-.table td,
-.dropdown-divider {
-  border-color: var(--orca-black) !important;
+.form-control:focus, select:focus, textarea:focus, input:focus,
+button:focus, .btn:focus {
+  background-color: #ffffff !important;
+  border-color: #000000 !important;
+  box-shadow: 0 0 0 2px #000000 !important;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
 }
 
-::selection {
-  background: var(--orca-black);
-  color: var(--orca-white);
+.dropdown-item:hover, .dropdown-item:focus,
+.list-group-item-action:hover, .list-group-item-action:focus,
+.nav-tabs .nav-link.active, .nav-pills .nav-link.active,
+.table-striped tbody tr:nth-of-type(odd), .table-hover tbody tr:hover {
+  background-color: #000000 !important;
+  color: #ffffff !important;
 }
 
-/* Replace legacy application marks with the exact supplied ORCA logo. */
-.app-icon {
+.MuiPaper-root, .MuiCard-root, .MuiDialog-paper, .MuiPopover-paper,
+.MuiMenu-paper, .MuiAlert-root {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-radius: 0 !important;
+  border: 1px solid #000000 !important;
+  box-shadow: 4px 4px 0 #000000 !important;
+}
+
+.MuiDialogTitle-root, .MuiCardHeader-root, .MuiTableHead-root,
+.MuiDataGrid-columnHeaders {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+.MuiDialogTitle-root *, .MuiCardHeader-root *, .MuiTableHead-root *,
+.MuiDataGrid-columnHeaders * { color: #ffffff !important; }
+
+.MuiIconButton-root, .MuiSvgIcon-root { color: currentColor !important; }
+
+.MuiTooltip-tooltip, .tooltip-inner {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 1px solid #ffffff !important;
+}
+
+::selection { background: #000000; color: #ffffff; }
+
+/* MFA/Auth pages: make QR images visible even when upstream theme rules affect img elements. */
+.orca-security-shell img,
+.orca-security-shell img[alt*="QR"],
+.orca-security-shell img[alt*="qr"],
+body.orca-security-page img[src^="data:image/"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  max-width: 100% !important;
+  height: auto !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Some theme layers can make a generated QR blend into its background. */
+body.orca-security-page .mfa-qrcode,
+body.orca-security-page .qr-code,
+body.orca-security-page [class*="qr-code"],
+body.orca-security-page [class*="qrcode"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.app-icon, .orca-app-icon {
   background: url('../img/orca-logo.svg') center / contain no-repeat !important;
   color: transparent !important;
-  width: 1.5em;
-  height: 1.5em;
   display: inline-block;
 }
 
@@ -160,344 +179,26 @@ hr,
   background-size: 75px 75px !important;
 }
 
-.orca-welcome-logo {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 1rem;
-  width: 100% !important;
-  padding: 1rem 0.5rem;
-  color: var(--orca-black);
-}
+.orca-welcome-logo { display: flex; align-items: center; gap: 1rem; width: 100% !important; padding: 1rem .5rem; }
+.orca-welcome-logo img { width: 112px; height: 112px; object-fit: contain; }
+.orca-welcome-wordmark { color: #000000; font-size: 2rem; font-weight: 800; letter-spacing: .08em; line-height: 1; }
+.orca-welcome-tagline { color: #000000; font-size: .78rem; font-weight: 700; letter-spacing: .16em; line-height: 1.2; }
 
-.orca-welcome-logo img {
-  width: 112px;
-  height: 112px;
-  flex: 0 0 112px;
-  object-fit: contain;
-}
-
-.orca-welcome-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  text-align: left;
-}
-
-.orca-welcome-wordmark {
-  color: var(--orca-black);
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  line-height: 1;
-}
-
-.orca-welcome-tagline {
-  color: var(--orca-black);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  line-height: 1.2;
-}
-
-@media (max-width: 640px) {
-  .orca-welcome-logo {
-    flex-direction: column;
-  }
-
-  .orca-welcome-logo {
-    justify-content: center;
-  }
-
-  .orca-welcome-wordmark {
-    font-size: 1.35rem;
-  }
-
-  .orca-welcome-tagline {
-    font-size: 0.68rem;
-  }
-}
-
-/* ORCA DB light theme: a strict black-and-white system. */
-:root {
-  --orca-ink: #0a0a0a;
-  --orca-paper: #ffffff;
-  --orca-mist: #ffffff;
-  --orca-line: #000000;
-  --orca-muted: #000000;
-}
-
-html,
-body {
-  background: var(--orca-paper) !important;
-  color: var(--orca-ink) !important;
-}
-
-body {
-  letter-spacing: 0.005em;
-}
-
-button,
-.MuiButton-root {
-  min-height: 36px;
-  font-weight: 700 !important;
-  letter-spacing: 0.015em;
-  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
-}
-
-button:active,
-.MuiButton-root:active {
-  transform: scale(0.98);
-}
-
-input,
-select,
-textarea,
-.MuiInputBase-root,
-.MuiOutlinedInput-root,
-.MuiTextField-root .MuiInputBase-root {
-  background: var(--orca-paper) !important;
-  color: var(--orca-ink) !important;
-  border-radius: 0 !important;
-}
-
-input::placeholder,
-textarea::placeholder,
-.MuiInputBase-input::placeholder {
-  color: var(--orca-muted) !important;
-  opacity: 1;
-}
-
-.MuiPaper-root,
-.MuiCard-root,
-.MuiDialog-paper,
-.MuiPopover-paper,
-.MuiMenu-paper,
-.MuiAlert-root {
-  background: var(--orca-paper) !important;
-  color: var(--orca-ink) !important;
-  border-radius: 0 !important;
-  border: 1px solid var(--orca-line) !important;
-  box-shadow: 4px 4px 0 var(--orca-ink) !important;
-}
-
-.MuiDialogTitle-root,
-.MuiDialogActions-root,
-.MuiCardHeader-root,
-.MuiTableHead-root,
-.MuiDataGrid-columnHeaders {
-  background: var(--orca-ink) !important;
-  color: var(--orca-paper) !important;
-}
-
-.MuiDialogTitle-root .MuiTypography-root,
-.MuiCardHeader-root .MuiTypography-root,
-.MuiTableHead-root .MuiTypography-root {
-  color: var(--orca-paper) !important;
-}
-
-.MuiIconButton-root,
-.MuiSvgIcon-root {
-  color: currentColor !important;
-}
-
-.MuiTabs-indicator,
-.MuiLinearProgress-bar,
-.MuiCircularProgress-root {
-  background-color: var(--orca-ink) !important;
-  color: var(--orca-ink) !important;
-}
-
-.MuiSwitch-switchBase.Mui-checked {
-  color: var(--orca-paper) !important;
-}
-
-.MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track {
-  background-color: var(--orca-ink) !important;
-  opacity: 1 !important;
-}
-
-.MuiTooltip-tooltip,
-.tooltip-inner {
-  background: var(--orca-ink) !important;
-  color: var(--orca-paper) !important;
-  border: 1px solid var(--orca-paper) !important;
-  border-radius: 0 !important;
-}
-
-.Mui-focused,
-:focus-visible {
-  outline: 2px solid var(--orca-ink) !important;
-  outline-offset: 2px;
-}
-
-.BasePage-pageContent {
-  border-width: 2px !important;
-  box-shadow: 8px 8px 0 var(--orca-ink) !important;
-}
-
-.BasePage-logo {
-  filter: grayscale(1) contrast(1.25) !important;
-}
-
-.orca-passkey-backup {
-  background: var(--orca-mist) !important;
-  box-shadow: 4px 4px 0 var(--orca-ink);
-}
-
-.orca-passkey-backup .MuiButton-contained {
-  background: var(--orca-ink) !important;
-  color: var(--orca-paper) !important;
-  border: 1px solid var(--orca-ink) !important;
-  border-radius: 0 !important;
-}
-
-.orca-passkey-backup .MuiButton-outlined {
-  background: var(--orca-paper) !important;
-  color: var(--orca-ink) !important;
-  border: 1px solid var(--orca-ink) !important;
-  border-radius: 0 !important;
-}
-
-.orca-passkey-backup .MuiButton-contained:hover,
-.orca-passkey-backup .MuiButton-contained:focus,
-.orca-passkey-backup .MuiButton-outlined:hover,
-.orca-passkey-backup .MuiButton-outlined:focus {
-  background: var(--orca-paper) !important;
-  color: var(--orca-ink) !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .BasePage-pageContent {
-    min-width: min(450px, calc(100vw - 32px)) !important;
-    max-width: calc(100vw - 32px) !important;
-    box-shadow: 4px 4px 0 var(--orca-ink) !important;
-  }
-}
-
-.orca-app-icon {
-  display: inline-block;
-  width: 1.35em;
-  height: 1.35em;
-  margin-right: 0.35em;
-  vertical-align: -0.2em;
-  background: url('../img/orca-logo.svg') center / contain no-repeat !important;
-  color: transparent !important;
-}
-
-/* Authentication pages are a separate surface: never show the application header or splash here. */
-body.orca-security-page {
-  background: #ffffff !important;
-  color: #000000 !important;
-  color-scheme: light;
-  overflow: hidden;
-}
-
-body.orca-security-page #root {
-  min-height: 100vh;
-  height: 100%;
-  position: relative;
-  z-index: 1;
-}
-
+body.orca-security-page { background: #000000 !important; color: #000000 !important; color-scheme: light; }
+body.orca-security-page #root { min-height: 100vh; position: relative; z-index: 1; }
 body.orca-security-page [data-test="app-menu-bar"],
 body.orca-security-page .AppMenuBar,
 body.orca-security-page .app-menu-bar,
-body.orca-security-page #orca-splash-overlay {
-  display: none !important;
-}
-
-body.orca-security-page .orca-security-shell {
-  min-height: 100vh;
-  width: 100%;
-  background: #ffffff !important;
-  color: #000000 !important;
-}
-
-body.orca-security-page .orca-security-shell > .MuiBox-root {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-body.orca-security-page .BasePage-pageContent {
-  box-sizing: border-box;
-  width: min(450px, calc(100vw - 32px));
-  min-width: min(450px, calc(100vw - 32px));
-  max-width: 450px;
-  background: #ffffff !important;
-  color: #000000 !important;
-}
-
-body.orca-security-page .orca-login-form {
-  width: 100%;
-}
+body.orca-security-page #orca-splash-overlay { display: none !important; }
+body.orca-security-page .orca-security-shell { min-height: 100vh; width: 100%; background: #ffffff !important; color: #000000 !important; }
+body.orca-security-page .BasePage-pageContent { box-sizing: border-box; width: min(450px, calc(100vw - 32px)); max-width: 450px; background: #ffffff !important; color: #000000 !important; }
+body.orca-security-page .BasePage-pageContent * { color: #000000; }
+body.orca-security-page .BasePage-pageContent button,
+body.orca-security-page .BasePage-pageContent .btn { color: #ffffff !important; background: #000000 !important; }
 
 @media (max-width: 640px) {
-  body.orca-security-page .orca-security-shell > .MuiBox-root {
-    padding: 16px !important;
-  }
-
-  body.orca-security-page .BasePage-pageContent {
-    min-width: 0;
-    width: 100%;
-  }
-}
-
-/* Force the full desktop shell to use ORCA DB black/white branding even when
- * browser bundles or theme assets are cached from older upstream builds. */
-[data-test="app-menu-bar"] .AppMenuBar-brand::after,
-.pgadmin_header_logo::after,
-.navbar-brand::after {
-  content: 'ORCA DB' !important;
-  color: #000000 !important;
-  font-weight: 800 !important;
-  letter-spacing: 0.08em !important;
-  margin-left: 8px !important;
-  white-space: nowrap !important;
-}
-
-[data-test="app-menu-bar"] .AppMenuBar-wordmark,
-.pgadmin_header_logo,
-.navbar-brand {
-  color: transparent !important;
-  font-size: 0 !important;
-}
-
-[data-test="app-menu-bar"] .AppMenuBar-logo,
-.pgadmin_header_logo::before,
-.navbar-brand::before {
-  content: '' !important;
-  display: inline-block !important;
-  width: 30px !important;
-  height: 30px !important;
-  vertical-align: middle !important;
-  background: url('../img/orca-logo.svg') center / contain no-repeat !important;
-  filter: grayscale(1) contrast(1.25) !important;
-}
-
-body.orca-security-page {
-  background: #000000 !important;
-}
-
-body.orca-security-page .BasePage-bgVideo,
-body.orca-security-page .BasePage-bgVeil {
-  display: block !important;
-}
-
-body.orca-security-page .BasePage-pageContent {
-  border-width: 2px !important;
-  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.95) !important;
-}
-
-body.orca-security-page .BasePage-logo {
-  background-image: url('../img/orca-logo.svg') !important;
+  .orca-welcome-logo { flex-direction: column; justify-content: center; }
+  .orca-welcome-wordmark { font-size: 1.35rem; }
+  body.orca-security-page .orca-security-shell > .MuiBox-root { padding: 16px !important; }
+  body.orca-security-page .BasePage-pageContent { min-width: 0; width: 100%; }
 }
