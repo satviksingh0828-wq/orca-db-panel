@@ -228,7 +228,7 @@ export function showChangeServerPassword() {
 }
 
 export function showChangeUserPassword(url) {
-  const title = gettext('Change pgAdmin User Password');
+  const title = gettext('Change ORCA DB User Password');
   pgAdmin.Browser.notifier.showModal(title, (onClose) => {
     return <ChangePasswordContent
       getInitData={()=>{

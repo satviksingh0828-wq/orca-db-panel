@@ -451,3 +451,53 @@ body.orca-security-page .orca-login-form {
     width: 100%;
   }
 }
+
+/* Force the full desktop shell to use ORCA DB black/white branding even when
+ * browser bundles or theme assets are cached from older upstream builds. */
+[data-test="app-menu-bar"] .AppMenuBar-brand::after,
+.pgadmin_header_logo::after,
+.navbar-brand::after {
+  content: 'ORCA DB' !important;
+  color: #000000 !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.08em !important;
+  margin-left: 8px !important;
+  white-space: nowrap !important;
+}
+
+[data-test="app-menu-bar"] .AppMenuBar-wordmark,
+.pgadmin_header_logo,
+.navbar-brand {
+  color: transparent !important;
+  font-size: 0 !important;
+}
+
+[data-test="app-menu-bar"] .AppMenuBar-logo,
+.pgadmin_header_logo::before,
+.navbar-brand::before {
+  content: '' !important;
+  display: inline-block !important;
+  width: 30px !important;
+  height: 30px !important;
+  vertical-align: middle !important;
+  background: url('../img/orca-logo.svg') center / contain no-repeat !important;
+  filter: grayscale(1) contrast(1.25) !important;
+}
+
+body.orca-security-page {
+  background: #000000 !important;
+}
+
+body.orca-security-page .BasePage-bgVideo,
+body.orca-security-page .BasePage-bgVeil {
+  display: block !important;
+}
+
+body.orca-security-page .BasePage-pageContent {
+  border-width: 2px !important;
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.95) !important;
+}
+
+body.orca-security-page .BasePage-logo {
+  background-image: url('../img/orca-logo.svg') !important;
+}

@@ -142,5 +142,63 @@ body {
             {% block init_script %}{% endblock %}
 </script>
 
+<script type="application/javascript">
+(function () {
+  var ORCA_BRAND = 'ORCA DB';
+  var BRAND_PATTERN = /pgAdmin(?: 4)?/g;
+  var pending = false;
+  var replaceBranding = function (value) {
+    return value && value.indexOf('pgAdmin') !== -1 ? value.replace(BRAND_PATTERN, ORCA_BRAND) : value;
+  };
+  var rewriteVisibleBranding = function () {
+    pending = false;
+    if (!document.body) {
+      return;
+    }
+    document.title = replaceBranding(document.title);
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var parent = node.parentElement;
+        if (!parent || parent.closest('script, style, template')) {
+          return NodeFilter.FILTER_REJECT;
+        }
+        return node.nodeValue.indexOf('pgAdmin') === -1 ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node = walker.nextNode();
+    while (node) {
+      node.nodeValue = replaceBranding(node.nodeValue);
+      node = walker.nextNode();
+    }
+    document.querySelectorAll('[title*="pgAdmin"], [aria-label*="pgAdmin"], [alt*="pgAdmin"], [placeholder*="pgAdmin"]').forEach(function (element) {
+      ['title', 'aria-label', 'alt', 'placeholder'].forEach(function (attributeName) {
+        if (element.hasAttribute(attributeName)) {
+          element.setAttribute(attributeName, replaceBranding(element.getAttribute(attributeName)));
+        }
+      });
+    });
+  };
+  var scheduleRewrite = function () {
+    if (pending) {
+      return;
+    }
+    pending = true;
+    window.setTimeout(rewriteVisibleBranding, 250);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scheduleRewrite);
+  } else {
+    scheduleRewrite();
+  }
+  if ('MutationObserver' in window) {
+    new MutationObserver(scheduleRewrite).observe(document.documentElement, {
+      childList: true,
+      characterData: true,
+      subtree: true
+    });
+  }
+}());
+</script>
+
 </body>
 </html>
