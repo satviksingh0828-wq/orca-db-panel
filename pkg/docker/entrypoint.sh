@@ -113,7 +113,9 @@ fi
 if [ "$restricted" = "1" ] || [ ! -x /venv/bin/python3-cap ]; then
     PYTHON_BIN=/venv/bin/python3
     if [ -z "${PGADMIN_LISTEN_PORT}" ]; then
-        if [ -n "${PGADMIN_ENABLE_TLS}" ]; then
+        if [ -n "${PORT}" ]; then
+            export PGADMIN_LISTEN_PORT="${PORT}"
+        elif [ -n "${PGADMIN_ENABLE_TLS}" ]; then
             export PGADMIN_LISTEN_PORT=8443
         else
             export PGADMIN_LISTEN_PORT=8080
