@@ -12,12 +12,13 @@ import gettext from 'sources/gettext';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import pgAdmin from 'sources/pgadmin';
-import PgAdminLogo from './PgAdminLogo';
+import OrcaDbPanelLogo from './PgAdminLogo';
 import { Link } from '@mui/material';
 
 
-const Root = styled('div')(({theme}) => ({
-  background: theme.palette.grey[400],
+const Root = styled('div')(() => ({
+  background: '#ffffff',
+  color: '#000000',
   overflow: 'hidden',
   padding: '8px',
   display: 'flex',
@@ -41,18 +42,20 @@ const Root = styled('div')(({theme}) => ({
         position: 'relative',
         minWidth: 0,
         wordWrap: 'break-word',
-        backgroundColor: theme.otherVars.tableBg,
+        backgroundColor: '#ffffff',
+        color: '#000000',
         backgroundClip: 'border-box',
-        border: '1px solid' + theme.otherVars.borderColor,
-        borderRadius: theme.shape.borderRadius,
+        border: '1px solid #000000',
+        borderRadius: 0,
         marginTop: 8,
 
         '& .WelcomeDashboard-cardHeader': {
           padding: '0.25rem 0.5rem',
           fontWeight: 'bold',
-          backgroundColor: theme.otherVars.tableBg,
+          backgroundColor: '#000000',
+          color: '#ffffff',
           borderBottom: '1px solid',
-          borderBottomColor: theme.otherVars.borderColor,
+          borderBottomColor: '#000000',
         },
         '& .WelcomeDashboard-cardBody': {
           flex: '1 1 auto',
@@ -60,15 +63,11 @@ const Root = styled('div')(({theme}) => ({
           padding: '0.5rem !important',
 
           '& .WelcomeDashboard-welcomeLogo': {
-            width: '400px',
-            '& .app-name': {
-              fill: theme.otherVars.colorBrand
-            },
-            '& .app-name-underline': {
-              stroke: theme.palette.text.primary
-            },
-            '& .app-tagline': {
-              fill: theme.palette.text.primary
+            width: '100%',
+            color: '#000000',
+            '& .app-name, & .app-name-underline, & .app-tagline': {
+              fill: '#000000',
+              stroke: '#000000'
             }
           },
 
@@ -79,17 +78,17 @@ const Root = styled('div')(({theme}) => ({
             marginLeft: '-7.5px',
 
             '& .WelcomeDashboard-dashboardLink': {
-              color: theme.palette.text.primary + ' !important',
+              color: '#000000 !important',
               flex: '0 0 50%',
               maxWidth: '50%',
               textAlign: 'center',
               cursor: 'pointer',
 
               '& .WelcomeDashboard-link': {
-                color: theme.palette.text.primary + ' !important',
+                color: '#000000 !important',
 
                 '& .WelcomeDashboard-dashboardIcon': {
-                  color: theme.otherVars.colorBrand
+                  color: '#000000'
                 }
               },
             },
@@ -101,10 +100,10 @@ const Root = styled('div')(({theme}) => ({
               cursor: 'pointer',
 
               '& .WelcomeDashboard-link': {
-                color: theme.palette.text.primary + ' !important',
+                color: '#000000 !important',
 
                 '& .WelcomeDashboard-dashboardIcon': {
-                  color: theme.otherVars.colorBrand
+                  color: '#000000'
                 }
               },
             },
@@ -153,10 +152,10 @@ export default function WelcomeDashboard({ pgBrowser }) {
               <div className='WelcomeDashboard-cardHeader'>{gettext('Welcome')}</div>
               <div className='WelcomeDashboard-cardBody'>
                 <div className='WelcomeDashboard-welcomeLogo'>
-                  <PgAdminLogo />
+                  <OrcaDbPanelLogo />
                 </div>
                 <h4>
-                  {gettext('Feature rich')} | {gettext('Maximises PostgreSQL')}{' '}
+                  {gettext('Database Administration')} | {gettext('Private System')}{' '}
                   | {gettext('Open Source')}{' '}
                 </h4>
                 <p>
@@ -224,7 +223,7 @@ export default function WelcomeDashboard({ pgBrowser }) {
                     </a>
                   </div>
                   <div className='WelcomeDashboard-gettingStartedLink'>
-                    <a href="https://www.pgadmin.org" target="orca_db_panel_website" className='WelcomeDashboard-link'>
+                    <a href="https://github.com/satviksingh0828-wq/orca-db-panel" target="orca_db_panel_website" className='WelcomeDashboard-link'>
                       <div className='WelcomeDashboard-dashboardIcon'>
                         <span
                           className="fa fa-4x fa-globe"

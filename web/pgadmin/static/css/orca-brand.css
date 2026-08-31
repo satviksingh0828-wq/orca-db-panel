@@ -163,15 +163,25 @@ hr,
 .orca-welcome-logo {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 1rem;
+  width: 100% !important;
+  padding: 1rem 0.5rem;
   color: var(--orca-black);
 }
 
 .orca-welcome-logo img {
-  width: 96px;
-  height: 96px;
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
   object-fit: contain;
+}
+
+.orca-welcome-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  text-align: left;
 }
 
 .orca-welcome-wordmark {
@@ -182,12 +192,28 @@ hr,
   line-height: 1;
 }
 
+.orca-welcome-tagline {
+  color: var(--orca-black);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+}
+
 @media (max-width: 640px) {
   .orca-welcome-logo {
     flex-direction: column;
   }
 
+  .orca-welcome-logo {
+    justify-content: center;
+  }
+
   .orca-welcome-wordmark {
     font-size: 1.35rem;
+  }
+
+  .orca-welcome-tagline {
+    font-size: 0.68rem;
   }
 }
