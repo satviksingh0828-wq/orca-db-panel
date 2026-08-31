@@ -142,5 +142,50 @@ body {
             {% block init_script %}{% endblock %}
 </script>
 
+<script type="application/javascript">
+(function () {
+  var ORCA_BRAND = 'ORCA DB';
+  var replaceBranding = function (value) {
+    if (!value || value.indexOf('pgAdmin') === -1) {
+      return value;
+    }
+    return value.replace(/pgAdmin(?: 4)?/g, ORCA_BRAND);
+  };
+  var rewriteNode = function (node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      node.nodeValue = replaceBranding(node.nodeValue);
+      return;
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE || node.tagName === 'SCRIPT' || node.tagName === 'STYLE') {
+      return;
+    }
+    ['title', 'aria-label', 'alt', 'placeholder'].forEach(function (attributeName) {
+      if (node.hasAttribute(attributeName)) {
+        node.setAttribute(attributeName, replaceBranding(node.getAttribute(attributeName)));
+      }
+    });
+    node.childNodes.forEach(rewriteNode);
+  };
+  var runRewrite = function () {
+    rewriteNode(document.body);
+    document.title = replaceBranding(document.title);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runRewrite);
+  } else {
+    runRewrite();
+  }
+  new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      mutation.addedNodes.forEach(rewriteNode);
+      if (mutation.type === 'characterData') {
+        rewriteNode(mutation.target);
+      }
+    });
+    document.title = replaceBranding(document.title);
+  }).observe(document.documentElement, {childList: true, characterData: true, subtree: true});
+}());
+</script>
+
 </body>
 </html>
