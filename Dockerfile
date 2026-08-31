@@ -40,7 +40,8 @@ RUN export CPPFLAGS="-DPNG_ARM_NEON_OPT=0" && \
     npm install -g corepack && \
     corepack enable && \
     yarn install && \
-    yarn run bundle && \
+    yarn run bundle:dev && \
+    printf 'railway-build unknown\\n' > commit_hash && \
     rm -rf yarn.lock \
            package.json \
            .[^.]* \
