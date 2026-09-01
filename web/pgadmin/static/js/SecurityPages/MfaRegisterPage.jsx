@@ -60,8 +60,8 @@ function AuthenticatorRegisterView({mfaView}) {
       <input type='hidden' name={mfaView.auth_method} value='SETUP'/>
       <input type='hidden' name='VALIDATE' value='validate'/>
     </div>
-    <div className="orca-mfa-qr-wrap" style={{minHeight: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '12px', background: '#ffffff', border: '1px solid #c7ced8', borderRadius: '6px'}}>
-      <img className="orca-mfa-qr" src={`data:image/png;base64,${mfaView.image}`} style={{display: 'block', width: 'min(360px, 100%)', minWidth: '280px', height: 'auto', aspectRatio: '1 / 1', objectFit: 'contain', imageRendering: 'pixelated', background: '#ffffff'}} alt={mfaView.qrcode_alt_text} />
+    <div className="orca-mfa-qr-wrap" style={{minHeight: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', width: 'min(280px, 100%)', margin: '0 auto', padding: '16px', background: '#ffffff', border: '1px solid #c7ced8', borderRadius: '10px', boxSizing: 'border-box'}}>
+      <img className="orca-mfa-qr" src={`data:image/png;base64,${mfaView.image}`} style={{display: 'block', width: 'min(220px, 100%)', maxWidth: '100%', minWidth: 0, height: 'auto', aspectRatio: '1 / 1', objectFit: 'contain', imageRendering: 'pixelated', background: '#ffffff', border: '8px solid #ffffff', boxSizing: 'border-box'}} alt={mfaView.qrcode_alt_text} />
     </div>
     <div>{mfaView.auth_description}</div>
     <InputText value={inputValue} type="password" name="code" placeholder={mfaView.otp_placeholder}

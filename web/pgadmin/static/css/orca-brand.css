@@ -203,5 +203,129 @@ body.orca-security-page .BasePage-pageContent button, body.orca-security-page .B
   .orca-welcome-wordmark { font-size: 1.35rem; }
   body.orca-security-page .orca-security-shell > .MuiBox-root { padding: 16px !important; }
   body.orca-security-page .BasePage-pageContent { min-width: 0; width: 100%; }
-  .orca-security-shell img[alt*="QR"], body.orca-security-page img[src^="data:image/"] { min-width: 240px !important; width: min(320px, 100%) !important; }
+}
+
+/* The current data view uses react-table/react-data-grid classes rather than
+   the legacy ag-grid and slick-grid classes. Keep both table implementations
+   readable on the ORCA light surface. */
+.DataGridView-grid,
+.DataGridView-table,
+.DataGridView-table .pgrt-table,
+.DataGridView-table .pgrt-header,
+.DataGridView-table .pgrt-body,
+.DataGridView-table .pgrt-row,
+.ReactGrid-root,
+.ReactGrid-root .rdg-header-row,
+.ReactGrid-root .rdg-row {
+  background-color: var(--orca-surface) !important;
+  color: var(--orca-text) !important;
+}
+
+.DataGridView-table .pgrt-header-cell,
+.DataGridView-table .pgrt-header-cell > div,
+.DataGridView-table .pgrt-header-cell span,
+.ReactGrid-root .rdg-header-row .rdg-cell,
+.ReactGrid-root .rdg-header-row .rdg-cell > *,
+.ReactGrid-root .rdg-header-sort-name {
+  background-color: var(--orca-surface-strong) !important;
+  color: var(--orca-text) !important;
+  -webkit-text-fill-color: var(--orca-text) !important;
+  border-color: var(--orca-border) !important;
+}
+
+.DataGridView-table .pgrd-row-cell,
+.DataGridView-table .pgrd-row-cell-content,
+.ReactGrid-root .rdg-row .rdg-cell,
+.ReactGrid-root .rdg-row .rdg-cell > *,
+.ReactGrid-root .rdg-cell-value {
+  background-color: #ffffff !important;
+  color: var(--orca-text) !important;
+  -webkit-text-fill-color: var(--orca-text) !important;
+  border-color: var(--orca-border) !important;
+}
+
+/* The first react-data-grid column is the row-number/selection gutter. */
+.ReactGrid-root .rdg-cell[aria-colindex="1"]:not([role="columnheader"]) {
+  background-color: var(--orca-surface-strong) !important;
+  color: var(--orca-text) !important;
+  -webkit-text-fill-color: var(--orca-text) !important;
+  font-weight: 600;
+}
+
+.DataGridView-table .pgrt-header-resizer {
+  background-color: var(--orca-border) !important;
+}
+
+.DataGridView-table .pgrd-row-cell:focus-within,
+.ReactGrid-root .rdg-cell:focus-within {
+  outline: 2px solid var(--orca-focus) !important;
+  outline-offset: -2px;
+}
+
+/* Keep the authentication card and QR code compact, centred, and scannable. */
+body.orca-security-page .BasePage-pageContent {
+  box-sizing: border-box !important;
+  width: min(430px, calc(100vw - 32px)) !important;
+  min-width: 0 !important;
+  max-width: 430px !important;
+  padding: 24px !important;
+  background: #ffffff !important;
+  color: var(--orca-text) !important;
+  border: 1px solid var(--orca-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(31, 41, 55, .14) !important;
+}
+
+body.orca-security-page .orca-mfa-qr-wrap {
+  box-sizing: border-box !important;
+  width: min(280px, 100%) !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+  padding: 16px !important;
+  background: #ffffff !important;
+  border: 1px solid var(--orca-border) !important;
+  border-radius: 10px !important;
+}
+
+body.orca-security-page .orca-mfa-qr-wrap .orca-mfa-qr,
+body.orca-security-page .orca-security-shell img[alt*="QR"],
+body.orca-security-page .orca-security-shell img[alt*="qr"],
+body.orca-security-page img[src^="data:image/"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  width: min(220px, 100%) !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: contain !important;
+  image-rendering: pixelated !important;
+  background: #ffffff !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  border: 8px solid #ffffff !important;
+  box-sizing: border-box !important;
+}
+
+body.orca-security-page .BasePage-bgVideo,
+body.orca-security-page .BasePage-bgVeil {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  body.orca-security-page .BasePage-pageContent {
+    width: calc(100vw - 32px) !important;
+    padding: 20px !important;
+  }
+  body.orca-security-page .orca-mfa-qr-wrap {
+    width: min(250px, 100%) !important;
+    padding: 12px !important;
+  }
+  body.orca-security-page .orca-mfa-qr-wrap .orca-mfa-qr,
+  body.orca-security-page .orca-security-shell img[alt*="QR"],
+  body.orca-security-page .orca-security-shell img[alt*="qr"],
+  body.orca-security-page img[src^="data:image/"] {
+    width: min(190px, 100%) !important;
+  }
 }
