@@ -36,6 +36,101 @@
           color: #fff;
         }
     </style>
+
+    <style>
+        body.orca-security-page,
+        body.orca-security-page #root {
+            background: #000000 !important;
+        }
+        body.orca-security-page .orca-security-video,
+        body.orca-security-page .orca-security-veil {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        body.orca-security-page .orca-security-video {
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.15) brightness(0.42);
+            z-index: 0;
+        }
+        body.orca-security-page .orca-security-veil {
+            background: rgba(0, 0, 0, 0.42);
+            z-index: 0;
+        }
+        body.orca-security-page #root {
+            position: relative;
+            z-index: 1;
+        }
+        body.orca-security-page .BasePage-illustration,
+        body.orca-security-page [class*="BasePage-illustration"],
+        body.orca-security-page [class*="LoginPage-illustration"] {
+            display: none !important;
+        }
+        body.orca-security-page .BasePage-pageContent,
+        body.orca-security-page [class*="BasePage-pageContent"] {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border: 2px solid #000000 !important;
+            border-radius: 0 !important;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.95) !important;
+        }
+        body.orca-security-page .BasePage-logo,
+        body.orca-security-page [class*="BasePage-logo"] {
+            width: 180px !important;
+            height: 72px !important;
+            background: url("{{ url_for('static', filename='img/orca-logo.svg') }}") center / contain no-repeat !important;
+            color: transparent !important;
+            font-size: 0 !important;
+        }
+        body.orca-security-page button,
+        body.orca-security-page .MuiButton-root {
+            background: #000000 !important;
+            border: 2px solid #000000 !important;
+            color: #ffffff !important;
+            border-radius: 0 !important;
+        }
+        body.orca-security-page input,
+        body.orca-security-page select,
+        body.orca-security-page .MuiInputBase-root {
+            background: #ffffff !important;
+            color: #000000 !important;
+            border-color: #000000 !important;
+            border-radius: 0 !important;
+        }
+    </style>
+
+    <style>
+        .pgadmin_header_logo,
+        [class*="pgadmin_header_logo"] {
+            min-width: 128px !important;
+            width: 128px !important;
+            height: 34px !important;
+            background: #ffffff url("{{ url_for('static', filename='img/orca-logo.svg') }}") left center / 30px 30px no-repeat !important;
+            color: transparent !important;
+            font-size: 0 !important;
+            overflow: hidden !important;
+        }
+        .pgadmin_header_logo::after,
+        [class*="pgadmin_header_logo"]::after {
+            content: 'ORCA DB' !important;
+            display: inline-block !important;
+            color: #000000 !important;
+            font-size: 18px !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.04em !important;
+            line-height: 34px !important;
+            margin-left: 36px !important;
+            white-space: nowrap !important;
+        }
+        .pgadmin_header_logo svg,
+        .pgadmin_header_logo img,
+        [class*="pgadmin_header_logo"] svg,
+        [class*="pgadmin_header_logo"] img {
+            display: none !important;
+        }
+    </style>
     <style>
         #orca-splash-overlay {
             position: fixed;
@@ -155,6 +250,10 @@ body {
     if (!document.body) {
       return;
     }
+    document.querySelectorAll('.pgadmin_header_logo, [class*="pgadmin_header_logo"]').forEach(function (element) {
+      element.setAttribute('aria-label', ORCA_BRAND);
+      element.setAttribute('title', ORCA_BRAND);
+    });
     document.title = replaceBranding(document.title);
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode: function (node) {
