@@ -145,7 +145,6 @@ button:focus, .btn:focus {
 ::selection { background: #bfdbfe; color: var(--orca-text); }
 
 /* Authenticator QR: preserve a white quiet zone and render it large enough to scan. */
-.orca-security-shell img,
 .orca-security-shell img[alt*="QR"],
 .orca-security-shell img[alt*="qr"],
 body.orca-security-page img[src^="data:image/"] {
@@ -193,7 +192,7 @@ body.orca-security-page { background: var(--orca-surface) !important; color: var
 body.orca-security-page #root { min-height: 100vh; position: relative; z-index: 1; }
 body.orca-security-page [data-test="app-menu-bar"], body.orca-security-page .AppMenuBar,
 body.orca-security-page .app-menu-bar, body.orca-security-page #orca-splash-overlay { display: none !important; }
-body.orca-security-page .orca-security-shell { min-height: 100vh; width: 100%; background: var(--orca-surface) !important; color: var(--orca-text) !important; }
+body.orca-security-page .orca-security-shell { min-height: 100vh; width: 100%; background: transparent !important; color: var(--orca-text) !important; }
 body.orca-security-page .BasePage-pageContent { box-sizing: border-box; width: min(450px, calc(100vw - 32px)); max-width: 450px; background: #ffffff !important; color: var(--orca-text) !important; }
 body.orca-security-page .BasePage-pageContent * { color: var(--orca-text); }
 body.orca-security-page .BasePage-pageContent button, body.orca-security-page .BasePage-pageContent .btn { color: var(--orca-text) !important; background: var(--orca-surface-strong) !important; }
@@ -310,7 +309,16 @@ body.orca-security-page img[src^="data:image/"] {
 
 body.orca-security-page .BasePage-bgVideo,
 body.orca-security-page .BasePage-bgVeil {
-  display: none !important;
+  display: block !important;
+}
+
+body.orca-security-page .BasePage-bgVideo {
+  pointer-events: none;
+}
+
+body.orca-security-page .BasePage-bgVeil {
+  background: rgba(255, 255, 255, .48) !important;
+  pointer-events: none;
 }
 
 @media (max-width: 640px) {

@@ -1,7 +1,7 @@
 import { Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useSnackbar } from 'notistack';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { MESSAGE_TYPE, NotifierMessage } from '../components/FormComponents';
 import { FinalNotifyContent } from '../helpers/Notifier';
 import PropTypes from 'prop-types';
@@ -83,6 +83,59 @@ export function SecurityButton({...props}) {
 
 export default function BasePage({pageImage, title, children, messages}) {
   const snackbar = useSnackbar();
+  const backgroundVideoRef = useRef(null);
+
+  useEffect(() => {
+    const video = backgroundVideoRef.current;
+    const canvas = document.createElement('canvas');
+
+    // Keep the animation local to the application. The previous Pixabay URL
+    // was blocked by common CSP/network configurations, leaving a blank login
+    // background. A canvas stream retains the video treatment without relying
+    // on a third-party asset at sign-in time.
+    if (!video || !canvas.captureStream) return undefined;
+
+    const context = canvas.getContext('2d');
+    if (!context) return undefined;
+
+    canvas.width = 960;
+    canvas.height = 540;
+    let frameId;
+    const renderFrame = (timestamp) => {
+      const progress = timestamp / 1000;
+      const gradient = context.createLinearGradient(0, 0, canvas.width, canvas.height);
+      gradient.addColorStop(0, '#dbeafe');
+      gradient.addColorStop(0.5, '#e0f2fe');
+      gradient.addColorStop(1, '#f0f9ff');
+      context.fillStyle = gradient;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+
+      [[180, 140, 150, '#60a5fa'], [760, 380, 210, '#38bdf8'], [500, 80, 110, '#93c5fd']]
+        .forEach(([x, y, radius, color], index) => {
+          const offset = Math.sin(progress * 0.45 + index) * 55;
+          const glow = context.createRadialGradient(x + offset, y, 0, x + offset, y, radius);
+          glow.addColorStop(0, `${color}80`);
+          glow.addColorStop(1, `${color}00`);
+          context.fillStyle = glow;
+          context.beginPath();
+          context.arc(x + offset, y, radius, 0, Math.PI * 2);
+          context.fill();
+        });
+      frameId = requestAnimationFrame(renderFrame);
+    };
+
+    const stream = canvas.captureStream(24);
+    video.srcObject = stream;
+    video.play().catch(() => {});
+    frameId = requestAnimationFrame(renderFrame);
+
+    return () => {
+      cancelAnimationFrame(frameId);
+      stream.getTracks().forEach((track) => track.stop());
+      video.srcObject = null;
+    };
+  }, []);
+
   useEffect(()=>{
     messages?.forEach((message)=>{
       let options = {
@@ -101,9 +154,7 @@ export default function BasePage({pageImage, title, children, messages}) {
   }, [messages]);
   return (
     <StyledBox className='orca-security-shell' data-test="security-page">
-      <video className='BasePage-bgVideo' autoPlay loop muted playsInline aria-hidden="true" tabIndex="-1">
-        <source src="https://cdn.pixabay.com/video/2023/10/15/185135-874643460_large.mp4" type="video/mp4" />
-      </video>
+      <video ref={backgroundVideoRef} className='BasePage-bgVideo' autoPlay loop muted playsInline aria-hidden="true" tabIndex="-1" />
       <div className='BasePage-bgVeil' aria-hidden="true" />
       <Box className='BasePage-layout' display="flex" minWidth="80%" gap="40px" alignItems="center" justifyContent="center" padding="20px 80px">
         <Box className='BasePage-illustration' aria-hidden="true" sx={{display: 'none'}}>
