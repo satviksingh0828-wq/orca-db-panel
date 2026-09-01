@@ -1,20 +1,25 @@
 :root {
-  --orca-black: #000000;
-  --orca-white: #ffffff;
+  --orca-surface: #f3f4f6;
+  --orca-surface-strong: #e5e7eb;
+  --orca-surface-muted: #eef1f4;
+  --orca-text: #111827;
+  --orca-text-muted: #4b5563;
+  --orca-border: #c7ced8;
+  --orca-focus: #2563eb;
+  --orca-accent: #dbeafe;
 }
 
 html, body, #root {
-  background: #ffffff !important;
-  color: #000000 !important;
+  background: var(--orca-surface) !important;
+  color: var(--orca-text) !important;
 }
 
-/* ORCA black/white theme with explicit foregrounds for controls and grids. */
 body, button, input, select, textarea, .tooltip, .popover, .dropdown-menu,
 .modal-content, .card, .panel, .form-control, .btn, .nav, .navbar,
 .table, .list-group, .treeview {
-  color: #000000 !important;
-  background-color: #ffffff !important;
-  border-color: #000000 !important;
+  color: var(--orca-text) !important;
+  background-color: var(--orca-surface) !important;
+  border-color: var(--orca-border) !important;
 }
 
 input, select, textarea,
@@ -25,32 +30,32 @@ input, select, textarea,
 .slick-row, .slick-cell {
   background: #ffffff !important;
   background-color: #ffffff !important;
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
+  color: var(--orca-text) !important;
+  -webkit-text-fill-color: var(--orca-text) !important;
 }
 
-/* Table/grid headers: never inherit a black foreground on a black header. */
+/* Keep table headings and row-number gutters on a light surface with explicit text. */
 .ag-header, .ag-header-viewport, .ag-header-container,
 .ag-header-row, .ag-header-cell, .ag-header-cell-label,
 .ag-header-cell-text, .slick-header, .slick-header-columns,
 .slick-header-column, .slick-header-column span,
-.table thead, .table thead th, .table th {
-  background: #000000 !important;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+.table thead, .table thead th, .table th,
+.ag-row-number, .ag-row-number-cell, .slick-row-number,
+.row-number, .row-header, .column-name, .column-header {
+  background: var(--orca-surface-strong) !important;
+  background-color: var(--orca-surface-strong) !important;
+  color: var(--orca-text) !important;
+  -webkit-text-fill-color: var(--orca-text) !important;
 }
 
-/* Table editor column-name/header variants used by pgAdmin releases. */
-.pgadmin-table-editor .column-name,
-.pgadmin-table-editor .column-header,
 .pgadmin-table-editor [class*="columnName"],
 .pgadmin-table-editor [class*="column-name"],
 .pgadmin-table-editor [class*="header-cell"],
 [data-test="table-editor"] .column-name,
 [data-test="table-editor"] .column-header {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+  background: var(--orca-surface-strong) !important;
+  color: var(--orca-text) !important;
+  -webkit-text-fill-color: var(--orca-text) !important;
 }
 
 .ag-cell-value, .ag-cell-wrapper, .slick-cell, .slick-cell *,
@@ -59,89 +64,87 @@ input, select, textarea,
   -webkit-text-fill-color: inherit !important;
 }
 
-/* Selected/focused cells remain readable. */
-.ag-row-selected .ag-cell,
-.ag-cell-focus, .slick-cell.selected, .slick-cell.active {
-  background: #000000 !important;
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
+.ag-row-selected .ag-cell, .ag-cell-focus,
+.slick-cell.selected, .slick-cell.active {
+  background: var(--orca-accent) !important;
+  color: var(--orca-text) !important;
+  -webkit-text-fill-color: var(--orca-text) !important;
 }
 
-* { border-color: #000000 !important; }
+* { border-color: var(--orca-border) !important; }
 
 a, a:hover, a:focus, a:active, button, .btn-link,
 .text-primary, .text-info, .text-success, .text-warning,
-.text-danger, .text-muted { color: #000000 !important; }
+.text-danger, .text-muted { color: var(--orca-text) !important; }
 
 .btn, .btn-primary, .btn-info, .btn-success, .btn-warning,
 .btn-danger, .btn-secondary, .btn-dark, .btn-light,
 .bg-primary, .bg-info, .bg-success, .bg-warning, .bg-danger,
 .bg-secondary, .bg-dark, .badge, .navbar-dark, .navbar-inverse,
 .panel-header, .modal-header, .topbar {
-  background-color: #000000 !important;
-  border-color: #000000 !important;
-  color: #ffffff !important;
+  background-color: var(--orca-surface-strong) !important;
+  border-color: var(--orca-border) !important;
+  color: var(--orca-text) !important;
 }
 
 .navbar a, .navbar button, .navbar .nav-link, .navbar .navbar-brand,
 .navbar-dark a, .navbar-inverse a, .panel-header a,
 .panel-header button, .modal-header, .modal-header button,
-.topbar a, .topbar button { color: #ffffff !important; }
+.topbar a, .topbar button { color: var(--orca-text) !important; }
 
 .btn:hover, .btn:focus, .btn:active, .btn.active,
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active,
 .btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
-  background-color: #ffffff !important;
-  border-color: #000000 !important;
-  color: #000000 !important;
+  background-color: var(--orca-accent) !important;
+  border-color: var(--orca-focus) !important;
+  color: var(--orca-text) !important;
 }
 
 .form-control:focus, select:focus, textarea:focus, input:focus,
 button:focus, .btn:focus {
   background-color: #ffffff !important;
-  border-color: #000000 !important;
-  box-shadow: 0 0 0 2px #000000 !important;
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
+  border-color: var(--orca-focus) !important;
+  box-shadow: 0 0 0 2px #93c5fd !important;
+  color: var(--orca-text) !important;
+  -webkit-text-fill-color: var(--orca-text) !important;
 }
 
 .dropdown-item:hover, .dropdown-item:focus,
 .list-group-item-action:hover, .list-group-item-action:focus,
 .nav-tabs .nav-link.active, .nav-pills .nav-link.active,
 .table-striped tbody tr:nth-of-type(odd), .table-hover tbody tr:hover {
-  background-color: #000000 !important;
-  color: #ffffff !important;
+  background-color: var(--orca-surface-muted) !important;
+  color: var(--orca-text) !important;
 }
 
 .MuiPaper-root, .MuiCard-root, .MuiDialog-paper, .MuiPopover-paper,
 .MuiMenu-paper, .MuiAlert-root {
   background: #ffffff !important;
-  color: #000000 !important;
-  border-radius: 0 !important;
-  border: 1px solid #000000 !important;
-  box-shadow: 4px 4px 0 #000000 !important;
+  color: var(--orca-text) !important;
+  border-radius: 6px !important;
+  border: 1px solid var(--orca-border) !important;
+  box-shadow: 0 4px 14px rgba(31, 41, 55, .12) !important;
 }
 
 .MuiDialogTitle-root, .MuiCardHeader-root, .MuiTableHead-root,
 .MuiDataGrid-columnHeaders {
-  background: #000000 !important;
-  color: #ffffff !important;
+  background: var(--orca-surface-strong) !important;
+  color: var(--orca-text) !important;
 }
 
 .MuiDialogTitle-root *, .MuiCardHeader-root *, .MuiTableHead-root *,
-.MuiDataGrid-columnHeaders * { color: #ffffff !important; }
-
-.MuiIconButton-root, .MuiSvgIcon-root { color: currentColor !important; }
+.MuiDataGrid-columnHeaders * { color: var(--orca-text) !important; }
+.MuiIconButton-root, .MuiSvgIcon-root { color: var(--orca-text) !important; }
 
 .MuiTooltip-tooltip, .tooltip-inner {
-  background: #000000 !important;
+  background: var(--orca-text-muted) !important;
   color: #ffffff !important;
-  border: 1px solid #ffffff !important;
+  border: 1px solid var(--orca-border) !important;
 }
 
-::selection { background: #000000; color: #ffffff; }
+::selection { background: #bfdbfe; color: var(--orca-text); }
 
-/* MFA/Auth pages: make QR images visible even when upstream theme rules affect img elements. */
+/* Authenticator QR: preserve a white quiet zone and render it large enough to scan. */
 .orca-security-shell img,
 .orca-security-shell img[alt*="QR"],
 .orca-security-shell img[alt*="qr"],
@@ -149,56 +152,56 @@ body.orca-security-page img[src^="data:image/"] {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
-  max-width: 100% !important;
+  width: min(360px, 100%) !important;
+  min-width: 280px !important;
   height: auto !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: contain !important;
+  image-rendering: pixelated !important;
   background: #ffffff !important;
-  color: #000000 !important;
+  color: var(--orca-text) !important;
   filter: none !important;
   mix-blend-mode: normal !important;
+  border: 12px solid #ffffff !important;
+  box-sizing: border-box !important;
 }
 
-/* Some theme layers can make a generated QR blend into its background. */
 body.orca-security-page .mfa-qrcode,
 body.orca-security-page .qr-code,
 body.orca-security-page [class*="qr-code"],
 body.orca-security-page [class*="qrcode"] {
   background: #ffffff !important;
-  color: #000000 !important;
+  color: var(--orca-text) !important;
   opacity: 1 !important;
   visibility: visible !important;
+  padding: 12px !important;
 }
 
-.app-icon, .orca-app-icon {
+.orca-app-icon, .app-icon {
   background: url('../img/orca-logo.svg') center / contain no-repeat !important;
   color: transparent !important;
   display: inline-block;
 }
-
-.pg-sp-icon {
-  background-image: url('../img/orca-logo.svg') !important;
-  background-size: 75px 75px !important;
-}
-
+.pg-sp-icon { background-image: url('../img/orca-logo.svg') !important; background-size: 75px 75px !important; }
 .orca-welcome-logo { display: flex; align-items: center; gap: 1rem; width: 100% !important; padding: 1rem .5rem; }
 .orca-welcome-logo img { width: 112px; height: 112px; object-fit: contain; }
-.orca-welcome-wordmark { color: #000000; font-size: 2rem; font-weight: 800; letter-spacing: .08em; line-height: 1; }
-.orca-welcome-tagline { color: #000000; font-size: .78rem; font-weight: 700; letter-spacing: .16em; line-height: 1.2; }
+.orca-welcome-wordmark, .orca-welcome-tagline { color: var(--orca-text); }
+.orca-welcome-wordmark { font-size: 2rem; font-weight: 800; letter-spacing: .08em; line-height: 1; }
+.orca-welcome-tagline { font-size: .78rem; font-weight: 700; letter-spacing: .16em; line-height: 1.2; }
 
-body.orca-security-page { background: #000000 !important; color: #000000 !important; color-scheme: light; }
+body.orca-security-page { background: var(--orca-surface) !important; color: var(--orca-text) !important; color-scheme: light; }
 body.orca-security-page #root { min-height: 100vh; position: relative; z-index: 1; }
-body.orca-security-page [data-test="app-menu-bar"],
-body.orca-security-page .AppMenuBar,
-body.orca-security-page .app-menu-bar,
-body.orca-security-page #orca-splash-overlay { display: none !important; }
-body.orca-security-page .orca-security-shell { min-height: 100vh; width: 100%; background: #ffffff !important; color: #000000 !important; }
-body.orca-security-page .BasePage-pageContent { box-sizing: border-box; width: min(450px, calc(100vw - 32px)); max-width: 450px; background: #ffffff !important; color: #000000 !important; }
-body.orca-security-page .BasePage-pageContent * { color: #000000; }
-body.orca-security-page .BasePage-pageContent button,
-body.orca-security-page .BasePage-pageContent .btn { color: #ffffff !important; background: #000000 !important; }
+body.orca-security-page [data-test="app-menu-bar"], body.orca-security-page .AppMenuBar,
+body.orca-security-page .app-menu-bar, body.orca-security-page #orca-splash-overlay { display: none !important; }
+body.orca-security-page .orca-security-shell { min-height: 100vh; width: 100%; background: var(--orca-surface) !important; color: var(--orca-text) !important; }
+body.orca-security-page .BasePage-pageContent { box-sizing: border-box; width: min(450px, calc(100vw - 32px)); max-width: 450px; background: #ffffff !important; color: var(--orca-text) !important; }
+body.orca-security-page .BasePage-pageContent * { color: var(--orca-text); }
+body.orca-security-page .BasePage-pageContent button, body.orca-security-page .BasePage-pageContent .btn { color: var(--orca-text) !important; background: var(--orca-surface-strong) !important; }
 
 @media (max-width: 640px) {
   .orca-welcome-logo { flex-direction: column; justify-content: center; }
   .orca-welcome-wordmark { font-size: 1.35rem; }
   body.orca-security-page .orca-security-shell > .MuiBox-root { padding: 16px !important; }
   body.orca-security-page .BasePage-pageContent { min-width: 0; width: 100%; }
+  .orca-security-shell img[alt*="QR"], body.orca-security-page img[src^="data:image/"] { min-width: 240px !important; width: min(320px, 100%) !important; }
 }

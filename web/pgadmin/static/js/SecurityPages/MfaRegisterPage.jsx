@@ -60,8 +60,8 @@ function AuthenticatorRegisterView({mfaView}) {
       <input type='hidden' name={mfaView.auth_method} value='SETUP'/>
       <input type='hidden' name='VALIDATE' value='validate'/>
     </div>
-    <div style={{minHeight: 0, display: 'flex'}}>
-      <img src={`data:image/jpeg;base64,${mfaView.image}`} style={{maxWidth: '100%', objectFit: 'contain'}} alt={mfaView.qrcode_alt_text} />
+    <div className="orca-mfa-qr-wrap" style={{minHeight: 0, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '12px', background: '#ffffff', border: '1px solid #c7ced8', borderRadius: '6px'}}>
+      <img className="orca-mfa-qr" src={`data:image/png;base64,${mfaView.image}`} style={{display: 'block', width: 'min(360px, 100%)', minWidth: '280px', height: 'auto', aspectRatio: '1 / 1', objectFit: 'contain', imageRendering: 'pixelated', background: '#ffffff'}} alt={mfaView.qrcode_alt_text} />
     </div>
     <div>{mfaView.auth_description}</div>
     <InputText value={inputValue} type="password" name="code" placeholder={mfaView.otp_placeholder}

@@ -152,9 +152,17 @@ class TOTPAuthenticator(BaseMFAuth):
             )
         )
 
-        img = qrcode.make(uri)
+        qr = qrcode.QRCode(
+            version=None,
+            error_correction=qrcode.constants.ERROR_CORRECT_M,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(uri)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color='#111827', back_color='#ffffff').convert('RGB')
         buffered = BytesIO()
-        img.save(buffered)
+        img.save(buffered, format='PNG', optimize=False)
         img_base64 = base64.b64encode(buffered.getvalue())
 
         return dict(

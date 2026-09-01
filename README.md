@@ -296,3 +296,11 @@ This Dockerfile is compatible with Railway’s builder and does not declare a Do
 Use `.env.example` as the safe template for local testing or Railway setup. On Railway, copy the variables into the service’s Variables panel rather than uploading a real `.env` file. `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD` are required on the first startup. Use a unique long password and store it as a Railway secret.
 
 The startup script honors `PGADMIN_LISTEN_PORT` when explicitly set; otherwise it uses Railway’s injected `PORT` value, and falls back to port `80` for local Docker runs. Do not commit real passwords, API keys, TLS private keys, or production configuration files.
+
+## Render deployment with Supabase backup
+
+The application continues to use its existing local pgAdmin SQLite configuration database as the primary store. When `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` are present, it also uploads a compressed snapshot after a successful request. On startup, if Render has no local SQLite file, the newest verified Supabase snapshot is restored before pgAdmin creates a new database. A Supabase outage never blocks the local application.
+
+Run the complete SQL in [`supabase/orca_pgadmin_state.sql`](supabase/orca_pgadmin_state.sql) once in the Supabase SQL Editor. In Render, add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` as server-side environment variables. Use the Supabase **service-role** key only in Render; the snapshot can contain sensitive pgAdmin configuration data and must never be exposed to frontend JavaScript. Keep Render’s persistent disk mounted at `/var/lib/pgadmin` as the first persistence layer, with Supabase as the second recovery layer.
+
+The QR registration page now emits a high-resolution PNG with a proper quiet zone and displays it at a large responsive size. The ORCA light theme also uses light gray surfaces, explicit dark text, visible row-number gutters, and non-black focus/selection states so labels do not disappear into their backgrounds.

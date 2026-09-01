@@ -39,6 +39,7 @@ import config
 import setup
 from pgadmin import create_app, socketio
 from pgadmin.utils.constants import INTERNAL
+from pgadmin.utils import supabase_sync
 # Get the config database schema version. We store this in pgadmin.model
 # as it turns out that putting it in the config files isn't a great idea
 from pgadmin.model import SCHEMA_VERSION
@@ -81,10 +82,10 @@ class ReverseProxied():
 ##########################################################################
 config.SETTINGS_SCHEMA_VERSION = SCHEMA_VERSION
 
-# Check if the database exists. If it does not, create it.
-setup_db_required = False
-if not os.path.isfile(config.SQLITE_PATH):
-    setup_db_required = True
+# Restore the local configuration database before deciding whether a fresh
+# database is required. The local SQLite file remains the primary store.
+supabase_sync.restore_if_missing(config.SQLITE_PATH)
+setup_db_required = not os.path.isfile(config.SQLITE_PATH)
 
 ##########################################################################
 # Create the app and configure it. It is created outside main so that
@@ -105,6 +106,10 @@ except FileNotFoundError as _:
 
 if setup_db_required:
     setup.setup_db(app)
+
+# Keep the existing local SQLite persistence and mirror it to Supabase when
+# configured. A remote outage is non-fatal and never blocks local operation.
+supabase_sync.register(app, config.SQLITE_PATH)
 
 # Authentication sources
 if len(config.AUTHENTICATION_SOURCES) > 0:
