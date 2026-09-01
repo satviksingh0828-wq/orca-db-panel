@@ -83,6 +83,7 @@ export function SecurityButton({...props}) {
 
 export default function BasePage({pageImage, title, children, messages}) {
   const snackbar = useSnackbar();
+
   useEffect(()=>{
     messages?.forEach((message)=>{
       let options = {
